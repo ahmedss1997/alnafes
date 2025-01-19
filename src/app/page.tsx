@@ -1,101 +1,359 @@
-import Image from "next/image";
+// import Image from "next/image";
+
+import Header from "@/components/Header";
+import About from "@/components/Home/About";
+import AskUs from "@/components/Home/AskUs";
+import Bakery from "@/components/Home/Bakery";
+import BestBaked from "@/components/Home/BestBacked";
+import ContactUs from "@/components/Home/ContactUs";
+import Recipes from "@/components/Home/Recipe";
+
+import { iProduct } from "@/code/dataModels";
+// // import Categories from "@/components/categories";
+import ProductCardCol from "../components/Home/productCardCol";
+
+const products: iProduct[] = [
+  {
+    "id": 1,
+    "name": "Product 1",
+    "price": 150.99,
+    "discountPrice": 100.99,
+    "persent": "30% OFF",
+    "imagesUrl": [
+      {
+        "id": 1,
+        "url": "https://placehold.co/100/red/white"
+      },
+      {
+        "id": 2,
+        "url": "https://placehold.co/100/blue/white"
+      },
+      {
+        "id": 3,
+        "url": "https://placehold.co/100/green/white"
+      },
+      {
+        "id": 4,
+        "url": "https://placehold.co/100/yellow/white"
+      }
+    ],
+    "description": "iPhone 14 128GB Blue 5G With - International",
+    "model": "Model 1",
+    "stock": 10,
+    "categoryId": 2,
+    "rating": 4.5,
+    "matrial": "Material 1",
+    "color": "Red",
+    "size": "M",
+    "SKU": "SKU001",
+    "reviews": [
+      {
+        "id": 1,
+        "username": "user1",
+        "comment": "Great product!",
+        "dateCreated": "2023-01-01",
+        "rate": 5
+      },
+      {
+        "id": 2,
+        "username": "user2",
+        "comment": "Great product!",
+        "dateCreated": "2023-01-01",
+        "rate": 5
+      }
+    ],
+    "tags": [
+      "Tag1",
+      "Tag2"
+    ],
+    "warranty": "1 Year",
+    "currency": "JOD",
+    categoryName: "Falafel",
+    rate: "(88)"
+  },
+  {
+    "id": 2,
+    "name": "Product 2",
+    "price": 20.99,
+    "discountPrice": 15.99,
+    "persent": "30% OFF",
+    "imagesUrl": [
+      {
+        "id": 1,
+        "url": "https://placehold.co/100/orange/white"
+      },
+      {
+        "id": 2,
+        "url": "https://placehold.co/100/purple/white"
+      },
+      {
+        "id": 3,
+        "url": "https://placehold.co/100/pink/white"
+      },
+      {
+        "id": 4,
+        "url": "https://placehold.co/100/brown/white"
+      }
+    ],
+    "description": "Description of product 2",
+    "model": "Model 2",
+    "stock": 5,
+    "categoryId": 2,
+    "rating": 4,
+    "matrial": "Material 2",
+    "color": "Blue",
+    "size": "L",
+    "SKU": "SKU002",
+    "reviews": [
+      {
+        "id": 1,
+        "username": "user2",
+        "comment": "Good value for money.",
+        "dateCreated": "2023-02-01",
+        "rate": 4
+      }
+    ],
+    "tags": [
+      "Tag3",
+      "Tag4"
+    ],
+    "warranty": "1 Year",
+    "currency": "JOD",
+    categoryName: "Liver",
+    rate: "(88)"
+  },
+  {
+    "id": 3,
+    "name": "Product 3",
+    "price": 25.99,
+    "discountPrice": 0,
+    "persent": "30% OFF",
+    "imagesUrl": [
+      {
+        "id": 1,
+        "url": "https://placehold.co/100/gray/white"
+      },
+      {
+        "id": 2,
+        "url": "https://placehold.co/100/black/white"
+      },
+      {
+        "id": 3,
+        "url": "https://placehold.co/100/teal/white"
+      },
+      {
+        "id": 4,
+        "url": "https://placehold.co/100/maroon/white"
+      }
+    ],
+    "description": "Description of product 3",
+    "model": "Model 3",
+    "stock": 0,
+    "categoryId": 2,
+    "rating": 4.8,
+    "matrial": "Material 3",
+    "color": "Green",
+    "size": "S",
+    "SKU": "SKU003",
+    "reviews": [
+      {
+        "id": 1,
+        "username": "user3",
+        "comment": "Highly recommend.",
+        "dateCreated": "2023-03-01",
+        "rate": 5
+      }
+    ],
+    "tags": [
+      "Tag5",
+      "Tag6"
+    ],
+    "warranty": "1 Year",
+    "currency": "JOD",
+    categoryName: "Falafel",
+    rate: "(88)"
+  },
+  {
+    "id": 4,
+    "name": "Product 4",
+    "price": 30.99,
+    "discountPrice": 25.99,
+    "persent": "30% OFF",
+    "imagesUrl": [
+      {
+        "id": 1,
+        "url": "https://placehold.co/100/cyan/white"
+      },
+      {
+        "id": 2,
+        "url": "https://placehold.co/100/magenta/white"
+      },
+      {
+        "id": 3,
+        "url": "https://placehold.co/100/navy/white"
+      },
+      {
+        "id": 4,
+        "url": "https://placehold.co/100/gold/white"
+      }
+    ],
+    "description": "Description of product 4",
+    "model": "Model 4",
+    "stock": 8,
+    "categoryId": 3,
+    "rating": 3.5,
+    "matrial": "Material 4",
+    "color": "Yellow",
+    "size": "XL",
+    "SKU": "SKU004",
+    "reviews": [
+      {
+        "id": 1,
+        "username": "user4",
+        "comment": "Decent quality.",
+        "dateCreated": "2023-04-01",
+        "rate": 3
+      }
+    ],
+    "tags": [
+      "Tag7",
+      "Tag8"
+    ],
+    "warranty": "1 Year",
+    "currency": "JOD",
+    categoryName: "Liver",
+    rate: "(88)"
+  },
+  {
+    "id": 5,
+    "name": "Product 5",
+    "price": 35.99,
+    "discountPrice": 30.99,
+    "persent": "30% OFF",
+    "imagesUrl": [
+      {
+        "id": 1,
+        "url": "https://placehold.co/100/silver/white"
+      },
+      {
+        "id": 2,
+        "url": "https://placehold.co/100/lime/white"
+      },
+      {
+        "id": 3,
+        "url": "https://placehold.co/100/olive/white"
+      },
+      {
+        "id": 4,
+        "url": "https://placehold.co/100/fuchsia/white"
+      }
+    ],
+    "description": "Description of product 5",
+    "model": "Model 5",
+    "stock": 0,
+    "categoryId": 2,
+    "rating": 4.2,
+    "matrial": "Material 5",
+    "color": "Purple",
+    "size": "XXL",
+    "SKU": "SKU005",
+    "reviews": [
+      {
+        "id": 1,
+        "username": "user5",
+        "comment": "Good product.",
+        "dateCreated": "2023-05-01",
+        "rate": 4
+      }
+    ],
+    "tags": [
+      "Tag9",
+      "Tag10"
+    ],
+    "warranty": "1 Year",
+    "currency": "JOD",
+    categoryName: "Falafel",
+    rate: "(88)"
+  },
+  {
+    "id": 6,
+    "name": "Product 6",
+    "price": 40.99,
+    "discountPrice": 35.99,
+    "persent": "30% OFF",
+    "imagesUrl": [
+      {
+        "id": 1,
+        "url": "https://placehold.co/100/peach/white"
+      },
+      {
+        "id": 2,
+        "url": "https://placehold.co/100/indigo/white"
+      },
+      {
+        "id": 3,
+        "url": "https://placehold.co/100/turquoise/white"
+      },
+      {
+        "id": 4,
+        "url": "https://placehold.co/100/violet/white"
+      }
+    ],
+    "description": "Description of product 6",
+    "model": "Model 6",
+    "stock": 12,
+    "categoryId": 2,
+    "rating": 4.7,
+    "matrial": "Material 6",
+    "color": "Orange",
+    "size": "XXXL",
+    "SKU": "SKU006",
+    "reviews": [
+      {
+        "id": 1,
+        "username": "user6",
+        "comment": "Excellent product.",
+        "dateCreated": "2023-06-01",
+        "rate": 5
+      }
+    ],
+    "tags": [
+      "Tag11",
+      "Tag12"
+    ],
+    "warranty": "1 Year",
+    "currency": "JOD",
+    categoryName: "Liver",
+    rate: "(88)"
+  },
+]
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="">
+      <Header />
+      <About />
+      <Bakery />
+      <BestBaked />
+      {/* <Categories /> */}
+      <div className="product-home container-fluid mx-auto px-4 py-5 sm:px-6 lg:px-8 flex items-center">
+        <div className="row-all w-full flex flex-wrap">
+          <div className="relative w-full flex items-center justify-between mb-5 px-3">
+            <span className="font-medium lg:text-3xl text-xl text-blackText">Sandwich on the go</span>
+          </div>
+          {products.map((product) => (
+            <div
+              key={product.id}
+              className="col-item p-3 lg:max-w-[25%] lg:basis-1/4 max-w-[50%] basis-1/2 "
+            >
+              <ProductCardCol product={product} key={product.id} />
+            </div>
+          ))}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
+      <Recipes />
+      <ContactUs />
+      <AskUs />
     </div>
   );
 }
