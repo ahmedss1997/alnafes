@@ -4,18 +4,18 @@ import Image from "next/image";
 import Recipe1 from "../../../public/assets/Recipe1.png"
 // import { useRecipeFilter } from "@/hooks/useRecipe";
 import { IRecipe } from "@/types/types";
-import { useEffect, useState } from "react";
-import { get } from "@/api/server";
+// import { useState } from "react";
+// import { get } from "@/api/server";
 
 const Recipes = () => {
-  
-  const [RecipesList, setReceipesList] = useState<IRecipe[] | null>(null);
+  const RecipesList: IRecipe[] = [];
+  // const [RecipesList, setReceipesList] = useState<IRecipe[] | null>(null);
 
-  const getRecipes = () => {
-    get(`api/Recipe/Filter`, false, {MaxPageSize: 4}).then((res) => {
-      setReceipesList(res.result);
-    })
-  }
+  // const getRecipes = () => {
+  //   get(`api/Recipe/Filter`, false, {MaxPageSize: 4}).then((res) => {
+  //     setReceipesList(res.result);
+  //   })
+  // }
 
   // useEffect (() => {
   //   getRecipes();

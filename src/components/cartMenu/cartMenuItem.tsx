@@ -5,6 +5,7 @@ import { useContext } from "react";
 import { GoPlus } from "react-icons/go";
 import { MdOutlineMinimize } from "react-icons/md";
 import { TbTrash } from "react-icons/tb";
+import Image from "next/image";
 
 export default function CartMenuItem ({product}: {product: iProductInCart}) {
     const { G_productsInCart, setG_ProductsInCart } = useContext(GlobalContext);
@@ -33,12 +34,12 @@ export default function CartMenuItem ({product}: {product: iProductInCart}) {
   return (
     <div className="flex justify-between py-3 border-b items-center">
         <div>
-            <img src={product.imagesUrl ? product.imagesUrl[0].url : ""} alt={product.name} className="w-12 h-12" />
+            <Image src={product.imagesUrl ? product.imagesUrl[0].url : ""} alt={product.name} className="w-12 h-12" />
         </div>
         <div className="flex-grow mx-1">
             <h3 className="text-captionColor">{product.name}</h3>
             <button
-                className="text-primary hover:text-white text-base font-normal justify-center items-center w-full rounded-md flex border-2 border-solid border-primary hover:bg-primary hover:text-white transition-all duration-500 ease-in-out block"
+                className="text-primary hover:text-white text-base font-normal justify-center items-center w-full rounded-md flex border-2 border-solid border-primary hover:bg-primary transition-all duration-500 ease-in-out"
                 >
                 <span
                     className="h-full flex justify-center items-center mx-1 cursor-pointer"

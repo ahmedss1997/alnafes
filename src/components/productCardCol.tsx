@@ -1,7 +1,7 @@
 "use client";
 import { iProduct } from "@/code/dataModels";
 import {useContext, useEffect, useState } from "react";
-import { RiHeartFill, RiHeartLine, RiShoppingBasket2Line } from "react-icons/ri";
+import { RiHeartFill, RiHeartLine } from "react-icons/ri";
 import { MdOutlineMinimize } from "react-icons/md";
 import { GoPlus } from "react-icons/go";
 import GlobalContext from "@/code/globalContext";
