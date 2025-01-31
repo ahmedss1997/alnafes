@@ -1,345 +1,174 @@
 "use client";
 
-import { useState } from 'react';
-import { PiEye, PiEyeClosed } from 'react-icons/pi';
-import { useLogin, useRegister } from '../../hooks/useAuthentication';
+import { useState } from "react";
+import authPhoto from "../../../public/assets/authPhoto.png"
+import { useRegister } from '../../hooks/useAuthentication';
+import { PiEye, PiEyeClosed } from "react-icons/pi";
+import Link from "next/link";
+import { useRouter } from 'next/navigation'
 
-const AuthPage = () => {
-  const [activeTab, setActiveTab] = useState('login');
+const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [credentialsLogin, setCredentialsLogin] = useState({ email: '', password: '' });
-  const [credentialsRegister, setCredentialsRegister] = useState({ firstName: '', lastName: '', phoneNumber: '0100415245', email: '', password: '', gender: 0, birthday: { year: 0, month: 0, day: 0, } });
-  const loginMutation = useLogin();
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [credentialsRegister, setCredentialsRegister] = useState({ firstName: '', lastName: '', phoneNumber: '', email: '', password: '',  });
   const registerMutation = useRegister();
+  const router = useRouter();
 
-  const handleForgetPassword = () => {
-    setActiveTab('resetPassword');
-  };
-
-  const handleResetPassword = () => {
-    setActiveTab('login');
-  };
-
-  const handleSubmitLogin = (e) => {
+  const handleSubmitRegister = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    loginMutation.mutate(credentialsLogin, {
-      onSuccess: (data) => {
-        // alert('Login successful!');
-        console.error('Login successful!', data);
-        localStorage.setItem('accessToken', data.token);
-      },
-      onError: (error) => {
-        // alert('Login failed: ' + error.response.data.message);
-        console.error('Login failed:', error.response);
-      },
-    });
-  };
-
-  const handleSubmitRegister = (e) => {
-    e.preventDefault();
-  
-    // Parse the birthday into the required format
-    // const [year, month, day] = credentialsRegister.birthday.split('-').map(Number);
     const formattedRegisterData = {
       ...credentialsRegister,
-      // birthday: new Date(year, month - 1, day).toJSON(),
-      gender: Number(credentialsRegister.gender), // Ensure gender is numeric
     };
-  
     registerMutation.mutate(formattedRegisterData, {
       onSuccess: (data) => {
         console.log('Register successful!', data);
         localStorage.setItem('accessToken', data.token);
+        router.push('/verfication_account');
       },
-      onError: (error) => {
+      onError: (error: any) => {
         console.error('Register failed:', error.response);
       },
     });
   };
-  
-
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-[712px] bg-white shadow-lg rounded-lg p-8">
-        {/* Tabs */}
-        {activeTab !== 'forgotPassword' && activeTab !== 'resetPassword' && (
-          <div className="w-1/2 mb-3 mx-auto">
-            <div className="flex justify-between border-b mb-6">
-              <button
-                className={`w-1/2 py-2 text-center text-2xl font-bold ${
-                  activeTab === 'login' ? 'text-primary border-b-2 border-primary' : 'text-grayColor'
-                }`}
-                onClick={() => setActiveTab('login')}
-              >
-                Login
-              </button>
-              <button
-                className={`w-1/2 py-2 text-center text-2xl font-bold ${
-                  activeTab === 'Sign_up' ? 'text-primary border-b-2 border-primary' : 'text-grayColor'
-                }`}
-                onClick={() => setActiveTab('Sign_up')}
-              >
-                Sign up
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Forms */}
-        {activeTab === 'login' && (
-          <form onSubmit={handleSubmitLogin}> 
-            <div className="mb-4">
-              <label className="block text-gray-700 font-medium mb-2">
-                Email
-              </label>
-              <input
-                id="email"
-                type="email"
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                placeholder="Email"
-                value={credentialsLogin.email}
-                onChange={(e) => setCredentialsLogin({ ...credentialsLogin, email: e.target.value })}
-                required
-              />
-            </div>
-            <div className="mb-4 relative">
-              <label className="block text-gray-700 font-medium mb-2" >
-                Password
-              </label>
-              <input
-                id="password"
-                type={showPassword ? "text" : "password"}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                placeholder="Password"
-                value={credentialsLogin.password}
-                onChange={(e) => setCredentialsLogin({ ...credentialsLogin, password: e.target.value })}
-                required
-              />
-              <div role="button" onClick={() => setShowPassword(!showPassword)} className="absolute bottom-0 end-0 flex items-center p-3.5 z-10">
-                {
-                  showPassword ? <PiEye /> : <PiEyeClosed />
-                }
-              </div>
-            </div>
-            <div className="">
-              <div onClick={() => setActiveTab('forgotPassword')} className="flex items-center justify-end">
-                <button className='text-grayColor'>
-                  Forget Password ?
-                </button>
-              </div>
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-primary text-white py-2 px-4 mt-4 rounded-lg"
-            >
-              {loginMutation.isLoading ? 'Logging in...' : 'Login'}
-            </button>
-          </form>
-        )}
-
-        {activeTab === 'Sign_up' && (
-          <form  onSubmit={handleSubmitRegister}>
-            <div className='flex flex-wrap'>
-              <div className='col-item lg:basis-1/2 basis-full'>
-                <div className="mb-4 mr-2">
-                  <label className="block text-gray-700 font-medium mb-2">
-                    First Name *
+    <div className="register flex items-center justify-center pt-12"
+      style={{
+        backgroundImage: `url(${authPhoto.src})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}>
+      <div className="container mx-auto px-4 py-5 sm:px-6 lg:px-8 ">
+        <div className="row-all w-full flex flex-wrap items-center"> 
+          <div className="col-item lg:max-w-[50%] lg:basis-1/2 max-w-full basis-full p-3">
+            <div className=" bg-borderLine rounded-2xl p-9">
+              <h1 className="text-2xl font-normal text-onSurface my-3 text-center">Create an account</h1>
+              <form onSubmit={handleSubmitRegister}>
+                <div className="mb-4">
+                  <label className="block text-bgGrayText50 font-medium mb-2">
+                    First name
                   </label>
                   <input
                     id="name"
                     type="text"
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                    placeholder="First Name"
+                    className="w-full p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-300"
+                    placeholder="Enter your first name"
                     value={credentialsRegister.firstName}
                     onChange={(e) => setCredentialsRegister({ ...credentialsRegister, firstName: e.target.value })}
                     required
                   />
                 </div>
-              </div>
-              <div className='col-item lg:basis-1/2 basis-full'>
-                <div className="mb-4 ml-2">
-                  <label className="block text-gray-700 font-medium mb-2">
-                    Last Name *
+                <div className="mb-4">
+                  <label className="block text-bgGrayText50 font-medium mb-2">
+                    Last name
                   </label>
                   <input
                     id="name"
                     type="text"
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                    placeholder="Last Name"
+                    className="w-full p-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    placeholder="Enter your last name"
                     value={credentialsRegister.lastName}
                     onChange={(e) => setCredentialsRegister({ ...credentialsRegister, lastName: e.target.value })}
                     required
                   />
                 </div>
-              </div>
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 font-medium mb-2">
-                E-mail *
-              </label>
-              <input
-                id="email"
-                type="email"
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                placeholder="Email"
-                value={credentialsRegister.email}
-                onChange={(e) => setCredentialsRegister({ ...credentialsRegister, email: e.target.value })}
-                required
-              />
-            </div>
-            <div className="mb-4 relative">
-              <label className="block text-gray-700 font-medium mb-2" >
-                Password
-              </label>
-              <input
-                id="password"
-                type={showPassword ? "text" : "password"}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                placeholder="Password"
-                value={credentialsRegister.password}
-                onChange={(e) => setCredentialsRegister({ ...credentialsRegister, password: e.target.value })}
-                required
-              />
-              <div role="button" onClick={() => setShowPassword(!showPassword)} className="absolute bottom-0 end-0 flex items-center p-3.5 z-10">
-                {
-                  showPassword ? <PiEye /> : <PiEyeClosed />
-                }
-              </div>
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 font-medium mb-2" >
-                Gender
-              </label>
-              <select
-                id="gender"
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                value={credentialsRegister.gender}
-                onChange={(e) => setCredentialsRegister({ ...credentialsRegister, gender: e.target.value })}
-                required
-              >
-                <option value="">Gender</option>
-                <option value="0">Male</option>
-                <option value="1">Female</option>
-                <option value="2">Other</option>
-              </select>
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 font-medium mb-2" >
-                Birthday
-              </label>
-              <input
-                id="password"
-                type="date"
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                placeholder="DD/MM/YYYY"
-                value={credentialsRegister.birthday}
-                onChange={(e) => setCredentialsRegister({ ...credentialsRegister, birthday: e.target.value })}
-                required
-              />
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-primary text-white py-2 px-4 mt-4 rounded-lg"
-            >
-              Sign Up
-            </button>
-          </form>
-        )}
-
-        {activeTab === 'forgotPassword' && (
-          <div>
-            <div className='mb-3'>
-              <h3 className='text-2xl font-semibold text-blackText mb-2'>Forgot Password</h3>
-              <p className='text-graySubText'>Enter the email address or mobile phone number associated with your Smart Cell  account.</p>
-            </div>
-            <form>
-              <div className="mb-4">
-                <label className="block text-gray-700 font-medium mb-2">
-                  Email
-                </label>
-                <input
-                  id="email"
-                  type="email"
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                  placeholder="Email"
-                />
-              </div>
-              <button
-                type="submit"
-                className="w-full bg-primary text-white py-2 px-4 mt-2 rounded-lg"
-                onClick={() => handleForgetPassword()}
-              >
-                Send
-              </button>
-              <div className="mt-4">
-                <div className="flex items-center mb-2">
-                  <span className='mx-2 text-grayColor'>Already have account?</span>
-                  <button onClick={() => setActiveTab('login')} className='text-primary font-medium'>
-                    Sign in
-                  </button>
+                <div className="mb-4">
+                  <label className="block text-bgGrayText50 font-medium mb-2">
+                    Email
+                  </label>
+                  <input
+                    id="email"
+                    type="email"
+                    className="w-full p-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    placeholder="Enter your email"
+                    value={credentialsRegister.email}
+                    onChange={(e) => setCredentialsRegister({ ...credentialsRegister, email: e.target.value })}
+                    required
+                  />
                 </div>
-                <div className="flex items-center mb-1">
-                  <span className='mx-2 text-grayColor'>Don’t have account?</span>
-                  <button onClick={() => setActiveTab('Sign_up')} className='text-primary font-medium'>
-                    Sign Up
-                  </button>
+                <div className="mb-4">
+                  <label className="block text-bgGrayText50 font-medium mb-2">
+                    Phone number
+                  </label>
+                  <input
+                    id="phone"
+                    type="number"
+                    className="w-full p-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    placeholder="--------"
+                    value={credentialsRegister.phoneNumber}
+                    onChange={(e) => setCredentialsRegister({ ...credentialsRegister, phoneNumber: e.target.value })}
+                    required
+                  />
                 </div>
-              </div>
-            </form>
+                <div className="mb-4 relative">
+                  <label className="block text-bgGrayText50 font-medium mb-2" >
+                    Password
+                  </label>
+                  <input
+                    id="password"
+                    type={showPassword ? "text" : "password"}
+                    className="w-full p-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    placeholder="Enter your password"
+                    value={credentialsRegister.password}
+                    onChange={(e) => setCredentialsRegister({ ...credentialsRegister, password: e.target.value })}
+                    required
+                  />
+                  <div role="button" onClick={() => setShowPassword(!showPassword)} className="absolute bottom-0 end-0 flex items-center p-3.5 z-10">
+                    {
+                      showPassword ? <PiEye /> : <PiEyeClosed />
+                    }
+                  </div>
+                </div>
+                <div className="mb-4 relative">
+                  <label className="block text-bgGrayText50 font-medium mb-2" >
+                    Confirm Password
+                  </label>
+                  <input
+                    id="password"
+                    type={showConfirmPassword ? "text" : "password"}
+                    className="w-full p-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    placeholder="Rewrite your password"
+                    required
+                  />
+                  <div role="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute bottom-0 end-0 flex items-center p-3.5 z-10">
+                    {
+                      showConfirmPassword ? <PiEye /> : <PiEyeClosed />
+                    }
+                  </div>
+                </div>
+                <div className="text-center mt-12 mb-8">
+                <Link
+                  onClick={handleSubmitRegister}
+                  href={"./verfication_account"}
+                  className="bg-primary text-white py-3 inline-block rounded-md w-full"
+                >
+                  <button>Sign up</button>
+                </Link>
+                </div>
+                <div className="text-center">
+                  <span className="text-base font-medium text-bgGrayText300 mb-6">Already have an account ?</span>
+                  <span>
+                    <Link
+                      href={"./sign_in"}
+                      className="text-bgGrayText50 px-3 py-2 cursor-pointer"
+                    >
+                      Log in
+                    </Link>
+                  </span>
+                </div>
+              </form>
+            </div>
           </div>
-        )}
-
-        {activeTab === 'resetPassword' && (
-          <div>
-            <div className='mb-3'>
-              <h3 className='text-2xl font-semibold text-blackText mb-2'>Reset Password</h3>
+          <div className="col-item hidden lg:block lg:max-w-[50%] lg:basis-1/2 max-w-full basis-full p-3">
+            <div className="text-center text-onSurface">
+              <h1 className="text-2xl font-normal">IBN AL-NAFIS Bakery</h1>
+              <hr className="my-5" />
+              <p className="text-2xl font-semibold">Who has never tasted IBN Al-nafis, knows not what is bakeries.</p>
             </div>
-            <form>
-              <div className="mb-4 relative">
-                <label className="block text-gray-700 font-medium mb-2">
-                  New Password
-                </label>
-                <input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                  placeholder="Password"
-                />
-                <div role="button" onClick={() => setShowPassword(!showPassword)} className="absolute bottom-0 end-0 flex items-center p-3.5 z-10">
-                  {
-                    showPassword ? <PiEye /> : <PiEyeClosed />
-                  }
-                </div>
-              </div>
-              <div className="mb-4 relative">
-                <label className="block text-gray-700 font-medium mb-2" >
-                  Confirm Password
-                </label>
-                <input
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                  placeholder="Password"
-                />
-                <div role="button" onClick={() => setShowPassword(!showPassword)} className="absolute bottom-0 end-0 flex items-center p-3.5 z-10">
-                  {
-                    showPassword ? <PiEye /> : <PiEyeClosed />
-                  }
-                </div>
-              </div>
-              <button
-                type="submit"
-                className="w-full bg-primary text-white py-2 px-4 mt-2 rounded-lg"
-                onClick={() => handleResetPassword()}
-              >
-                Reset Password
-              </button>
-            </form>
           </div>
-        )}
+        </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default AuthPage
+export default SignUpPage;

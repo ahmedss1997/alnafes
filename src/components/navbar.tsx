@@ -20,6 +20,8 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { MdPhone } from "react-icons/md";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { LuMenu } from "react-icons/lu";
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
 
 const Navbar = () => {
   const [cartMenuIsOpen, setCartMenuIsOpen] = useState(false);
@@ -27,11 +29,11 @@ const Navbar = () => {
   const [language, setLanguage] = useState('en');
   const [showDropdown, setShowDropdown] = useState(false);
   const [showProfileMenue, setShowProfileMenue] = useState(false);
-  const [token, setToken] = useState(false);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isSubmenuOpen, setSubmenuOpen] = useState(false);
   // const { t } = useTranslation();
 
+  const { currentUser } = useSelector((state: RootState) => state.auth);
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
   };
@@ -189,13 +191,14 @@ const Navbar = () => {
         </div>
         {/* profile Nav */}
         <div className="icon-nav flex items-center lg:justify-end justify-between relative lg:gap-5 lg:max-w-[30%] lg:basis-[30%] max-w-full basis-full">
-          {!token ? (
-            <button
-              onClick={() => setToken(!token)}
-              className="p-2 bg-primary w-[110px] text-onSurface rounded-md focus:outline-none flex items-center justify-center space-x-2"
-            >
-              <span>Login</span>
-            </button>
+          {!currentUser ? (
+            <Link href={'/sign_in'}>
+              <button
+                className="p-2 bg-primary w-[110px] text-onSurface rounded-md focus:outline-none flex items-center justify-center space-x-2"
+              >
+                <span>Login</span>
+              </button>
+            </Link>
           ): (
             <div
               className="lg:border-x-2 lg:border-borderGrayColor lg:px-6 px-3 flex items-center"
@@ -204,14 +207,14 @@ const Navbar = () => {
               <div className="w-14 h-14 rounded-full border border-bgGrayText300">
                 <Image 
                   className="w-full h-full"
-                  src={avatar}
-                  alt=""
+                  src={currentUser?.image || avatar}
+                  alt="avatar"
                 />
               </div>
               <button
                 className="p-2 rounded-md focus:outline-none flex items-center space-x-2"
               >
-                <span>Ahmed Ali</span>
+                <span> {currentUser?.firstName + ' ' + currentUser?.lastName } </span>
                 <IoChevronDownOutline />
               </button>
               <div>

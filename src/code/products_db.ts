@@ -4,8 +4,8 @@ const products: iProduct[] = [
   {
     "id": 1,
     "name": "Product 1",
-    "price": 150.99,
-    "discountPrice": 100.99,
+    "price": 650.99,
+    "discountPrice": 500.99,
     "imagesUrl": [
       {
         "id": 1,
@@ -54,7 +54,7 @@ const products: iProduct[] = [
       "Tag2"
     ],
     "warranty": "1 Year",
-    "currency": "SAR",
+    "currency": "JOD",
     persent: "",
     categoryName: "Falafel",
     rate: "(88)"
@@ -105,7 +105,7 @@ const products: iProduct[] = [
       "Tag4"
     ],
     "warranty": "1 Year",
-    "currency": "SAR",
+    "currency": "JOD",
     persent: "",
     categoryName: "Falafel",
     rate: "(88)"
@@ -156,7 +156,7 @@ const products: iProduct[] = [
       "Tag6"
     ],
     "warranty": "1 Year",
-    "currency": "SAR",
+    "currency": "JOD",
     persent: "",
     categoryName: "Falafel",
     rate: "(88)"
@@ -207,7 +207,7 @@ const products: iProduct[] = [
       "Tag8"
     ],
     "warranty": "1 Year",
-    "currency": "SAR",
+    "currency": "JOD",
     persent: "",
     categoryName: "Falafel",
     rate: "(88)"
@@ -258,7 +258,7 @@ const products: iProduct[] = [
       "Tag10"
     ],
     "warranty": "1 Year",
-    "currency": "SAR",
+    "currency": "JOD",
     persent: "",
     categoryName: "Falafel",
     rate: "(88)"
@@ -309,7 +309,7 @@ const products: iProduct[] = [
       "Tag12"
     ],
     "warranty": "1 Year",
-    "currency": "SAR",
+    "currency": "JOD",
     persent: "",
     categoryName: "Falafel",
     rate: "(88)"
@@ -360,7 +360,7 @@ const products: iProduct[] = [
       "Tag14"
     ],
     "warranty": "1 Year",
-    "currency": "SAR",
+    "currency": "JOD",
     persent: "",
     categoryName: "Falafel",
     rate: "(88)"
@@ -411,7 +411,7 @@ const products: iProduct[] = [
       "Tag16"
     ],
     "warranty": "1 Year",
-    "currency": "SAR",
+    "currency": "JOD",
     persent: "",
     categoryName: "Falafel",
     rate: "(88)"
@@ -462,7 +462,7 @@ const products: iProduct[] = [
       "Tag18"
     ],
     "warranty": "1 Year",
-    "currency": "SAR",
+    "currency": "JOD",
     persent: "",
     categoryName: "Falafel",
     rate: "(88)"
@@ -513,7 +513,7 @@ const products: iProduct[] = [
       "Tag20"
     ],
     "warranty": "1 Year",
-    "currency": "SAR",
+    "currency": "JOD",
     persent: "",
     categoryName: "Falafel",
     rate: "(88)"
@@ -571,7 +571,7 @@ const products: iProduct[] = [
       "Tag2"
     ],
     "warranty": "1 Year",
-    "currency": "SAR",
+    "currency": "JOD",
     persent: "",
     categoryName: "Falafel",
     rate: "(88)"
@@ -622,7 +622,7 @@ const products: iProduct[] = [
       "Tag4"
     ],
     "warranty": "1 Year",
-    "currency": "SAR",
+    "currency": "JOD",
     persent: "",
     categoryName: "Falafel",
     rate: "(88)"
@@ -673,7 +673,7 @@ const products: iProduct[] = [
       "Tag6"
     ],
     "warranty": "1 Year",
-    "currency": "SAR",
+    "currency": "JOD",
     persent: "",
     categoryName: "Falafel",
     rate: "(88)"
@@ -724,7 +724,7 @@ const products: iProduct[] = [
       "Tag8"
     ],
     "warranty": "1 Year",
-    "currency": "SAR",
+    "currency": "JOD",
     persent: "",
     categoryName: "Falafel",
     rate: "(88)"
@@ -775,7 +775,7 @@ const products: iProduct[] = [
       "Tag10"
     ],
     "warranty": "1 Year",
-    "currency": "SAR",
+    "currency": "JOD",
     persent: "",
     categoryName: "Falafel",
     rate: "(88)"
@@ -826,7 +826,7 @@ const products: iProduct[] = [
       "Tag12"
     ],
     "warranty": "1 Year",
-    "currency": "SAR",
+    "currency": "JOD",
     persent: "",
     categoryName: "Falafel",
     rate: "(88)"
@@ -877,7 +877,7 @@ const products: iProduct[] = [
       "Tag14"
     ],
     "warranty": "1 Year",
-    "currency": "SAR",
+    "currency": "JOD",
     persent: "",
     categoryName: "Falafel",
     rate: "(88)"
@@ -928,7 +928,7 @@ const products: iProduct[] = [
       "Tag16"
     ],
     "warranty": "1 Year",
-    "currency": "SAR",
+    "currency": "JOD",
     persent: "",
     categoryName: "Falafel",
     rate: "(88)"
@@ -979,7 +979,7 @@ const products: iProduct[] = [
       "Tag18"
     ],
     "warranty": "1 Year",
-    "currency": "SAR",
+    "currency": "JOD",
     persent: "",
     categoryName: "Falafel",
     rate: "(88)"
@@ -1030,7 +1030,7 @@ const products: iProduct[] = [
       "Tag20"
     ],
     "warranty": "1 Year",
-    "currency": "SAR",
+    "currency": "JOD",
     persent: "",
     categoryName: "Falafel",
     rate: "(88)"
@@ -1081,7 +1081,7 @@ const products: iProduct[] = [
       "Tag22"
     ],
     "warranty": "1 Year",
-    "currency": "SAR",
+    "currency": "JOD",
     persent: "",
     categoryName: "Falafel",
     rate: "(88)"
@@ -1132,7 +1132,7 @@ const products: iProduct[] = [
       "Tag24"
     ],
     "warranty": "1 Year",
-    "currency": "SAR",
+    "currency": "JOD",
     persent: "",
     categoryName: "Falafel",
     rate: "(88)"

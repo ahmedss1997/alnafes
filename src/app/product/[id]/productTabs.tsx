@@ -23,7 +23,7 @@ export default function ProductTabs({product}: {product: iProduct}) {
 
   return (
     <div className="">
-      <div className="flex flex-wrap mb-3 border-b">
+      <div className="flex flex-wrap mb-8 border-b">
         {tabs.map((tab) => (
           <div
             onClick={() => setActiveTab(tab.id)}

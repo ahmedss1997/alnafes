@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = 'https://smart.lasercoz.com';
+const baseURL = 'https://nafees.lasercoz.com';
 
 const instance = axios.create({
   headers: {

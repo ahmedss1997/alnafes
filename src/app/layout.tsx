@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Aoboshi_One, Cairo } from 'next/font/google'
-import QueryProvider from '../components/QueryProvider';
-import { GlobalContextProvider } from '@/code/globalContext';
+// import { GlobalContextProvider } from '@/code/globalContext';
 import "../styles/globals.css";
-import Footer from "@/components/footer";
-import Navbar from "@/components/navbar";
+import LayoutContainer from "./layoutContainer";
 
 
 export const metadata: Metadata = {
@@ -36,14 +34,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <GlobalContextProvider>
-    <html lang="en" className={`${inter.variable} ${aoboshi.variable} ${cairo.variable}`}>
-      <body className={`bg-onSurface min-h-screen font-inter`}>
-        <Navbar />
-        <QueryProvider>{children}</QueryProvider>
-        <Footer />
-      </body>
-    </html>
-    </GlobalContextProvider>
+
+
+      <html lang="en" className={`${inter.variable} ${aoboshi.variable} ${cairo.variable}`}>
+        <body className={`bg-onSurface min-h-screen font-inter`}>
+          <LayoutContainer>{children}</LayoutContainer>
+        </body>
+      </html>
+
   );
 }
