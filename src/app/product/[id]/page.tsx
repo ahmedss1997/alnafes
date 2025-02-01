@@ -8,13 +8,7 @@ import ProductTabs from "./productTabs";
 import products from "@/code/products_db";
 import ProductCardCol from "@/components/Home/productCardCol";
 
-interface ProductPageProps {
-  params: {
-    id: string;
-  };
-}
-
-export default function Product({ params }: ProductPageProps) {
+export default function Product({ params }: { params: { id: string } }) {
   const [product, setProduct] = useState<iProduct | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const productsList = products.slice(0, 4);
