@@ -32,7 +32,7 @@ export default function Product({ params }: ProductPageProps) {
   return (
     <main dir="ltr">
       <div className="container mx-auto px-3 md:px-6 py-12">
-        {/* fetching data*/}
+        {/* Fetching data */}
         {isLoading && <ProductSkeleton />}
         {/* Product not found */}
         {!isLoading && !product && (

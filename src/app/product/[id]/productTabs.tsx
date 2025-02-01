@@ -2,7 +2,7 @@
 
 import { iProduct } from "@/code/dataModels";
 import * as tabContent from "./product_TabsContent";
-import { useEffect, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 
 export default function ProductTabs({product}: {product: iProduct}) {
   const [activeTab, setActiveTab] = useState("description");

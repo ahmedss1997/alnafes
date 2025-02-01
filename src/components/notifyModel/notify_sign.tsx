@@ -34,7 +34,7 @@ export default function NotifySign ({setOpenNotify, setOpenNotifySuccess}: {setO
                             placeholder="Email"
                             />
                             
-                            <div className="flex items-center py-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
+                            <div className="items-center py-4 grid grid-cols-1 lg:grid-cols-3 gap-4">
                                 <button onClick={() => {setOpenNotify(false); setOpenNotifySuccess(true)}} type="button" className="text-center text-white bg-primary rounded-md px-3 py-2 mt-3 lg:col-span-2"> 
                                     Sign up
                                 </button>

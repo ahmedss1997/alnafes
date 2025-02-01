@@ -11,6 +11,7 @@ export default function LayoutContainer({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
   return (
     <Provider store={store}>
       <Navbar />

@@ -1,4 +1,4 @@
-// import Image from "next/image";
+"use client"
 
 import Header from "@/components/Header";
 import About from "@/components/Home/About";
@@ -9,10 +9,10 @@ import ContactUs from "@/components/Home/ContactUs";
 import Recipes from "@/components/Home/Recipe";
 
 import { iProduct } from "@/code/dataModels";
-// // import Categories from "@/components/categories";
 import ProductCardCol from "../components/Home/productCardCol";
+import { useEffect, useState } from "react";
 
-const products: iProduct[] = [
+const productsData: iProduct[] = [
   {
     "id": 1,
     "name": "Product 1",
@@ -329,6 +329,11 @@ const products: iProduct[] = [
 ]
 
 export default function Home() {
+  const [products, setProducts] = useState<iProduct[]>([]);
+  useEffect(() => {
+    setProducts(productsData);
+  }, []);
+
   return (
     <div className="">
       <Header />

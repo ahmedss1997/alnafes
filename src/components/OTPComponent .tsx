@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 
-const OTPComponent = ({ length = 6, onComplete }) => {
+const OTPComponent = ({ length = 6, onComplete }: {length: number, onComplete: any}) => {
   const [otp, setOtp] = useState(Array(length).fill(''));
   const inputRefs = useRef<HTMLInputElement[] | null[]>([]);
 

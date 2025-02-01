@@ -16,7 +16,7 @@ const getToken = () => {
 };
 
 // Utility for POST
-export const post = async (url: string, data, withToken = false, contentType = 'application/json') => {
+export const post = async (url: string, data: any, withToken = false, contentType = 'application/json') => {
   const culture = localStorage.getItem('culture') || 'en-US';
   const headers = {
     'Content-Type': contentType,
@@ -39,7 +39,7 @@ export const get = async (url: string, withToken = false, params = {}) => {
 };
 
 // Utility for PUT
-export const put = async (url: string, data, withToken = false, contentType = 'application/json') => {
+export const put = async (url: string, data: any, withToken = false, contentType = 'application/json') => {
   const culture = localStorage.getItem('culture') || 'en-US';
   const headers = {
     'Content-Type': contentType,

@@ -8,7 +8,7 @@ const AuthPage = () => {
   const [activeTab, setActiveTab] = useState('login');
   const [showPassword, setShowPassword] = useState(false);
   const [credentialsLogin, setCredentialsLogin] = useState({ email: '', password: '' });
-  const [credentialsRegister, setCredentialsRegister] = useState({ firstName: '', lastName: '', phoneNumber: '0100415245', email: '', password: '', gender: 0, birthday: { year: 0, month: 0, day: 0, } });
+  const [credentialsRegister, setCredentialsRegister] = useState({ firstName: '', lastName: '', phoneNumber: '0100415245', email: '', password: '', gender: 0, birthday: ""});
   const loginMutation = useLogin();
   const registerMutation = useRegister();
 
@@ -20,7 +20,7 @@ const AuthPage = () => {
     setActiveTab('login');
   };
 
-  const handleSubmitLogin = (e) => {
+  const handleSubmitLogin = (e: any) => {
     e.preventDefault();
     loginMutation.mutate(credentialsLogin, {
       onSuccess: (data) => {
@@ -29,20 +29,17 @@ const AuthPage = () => {
         localStorage.setItem('accessToken', data.token);
       },
       onError: (error) => {
-        // alert('Login failed: ' + error.response.data.message);
-        console.error('Login failed:', error.response);
+        console.error('Login failed:', error);
       },
     });
   };
 
-  const handleSubmitRegister = (e) => {
+  const handleSubmitRegister = (e: any) => {
     e.preventDefault();
   
     // Parse the birthday into the required format
-    // const [year, month, day] = credentialsRegister.birthday.split('-').map(Number);
     const formattedRegisterData = {
       ...credentialsRegister,
-      // birthday: new Date(year, month - 1, day).toJSON(),
       gender: Number(credentialsRegister.gender), // Ensure gender is numeric
     };
   
@@ -52,7 +49,7 @@ const AuthPage = () => {
         localStorage.setItem('accessToken', data.token);
       },
       onError: (error) => {
-        console.error('Register failed:', error.response);
+        console.error('Register failed:', error);
       },
     });
   };
@@ -132,7 +129,7 @@ const AuthPage = () => {
               type="submit"
               className="w-full bg-primary text-white py-2 px-4 mt-4 rounded-lg"
             >
-              {loginMutation.isLoading ? 'Logging in...' : 'Login'}
+              {loginMutation.isPending ? 'Logging in...' : 'Login'}
             </button>
           </form>
         )}
@@ -214,7 +211,7 @@ const AuthPage = () => {
                 id="gender"
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                 value={credentialsRegister.gender}
-                onChange={(e) => setCredentialsRegister({ ...credentialsRegister, gender: e.target.value })}
+                onChange={(e) => setCredentialsRegister({ ...credentialsRegister, gender: parseInt(e.target.value) })}
                 required
               >
                 <option value="">Gender</option>

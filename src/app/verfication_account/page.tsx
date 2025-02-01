@@ -15,14 +15,12 @@ const VerficationAccount = () => {
     e.preventDefault();
     VerficationMutation.mutate({ email: credentialsVerfication.Email, code: credentialsVerfication.Code }, {
       onSuccess: (data) => {
-        // alert('Login successful!');
         console.log('Verfication successful!', data);
         localStorage.setItem('accessToken', data.token);
         router.push('/sign_in');
       },
       onError: (error) => {
-        // alert('Login failed: ' + error.response.data.message);
-        console.error('Verfication failed:', error.response);
+        console.error('Verfication failed:', error);
       },
     });
   };

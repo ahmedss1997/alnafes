@@ -6,7 +6,7 @@ import { CiGlobe } from "react-icons/ci";
 import { useEffect, useRef, useState } from "react";
 import { IoMdArrowDropdown } from "react-icons/io";
 import Link from "next/link";
-import categories from "@/code/categories_db";
+// import categories from "@/code/categories_db";
 
 const itemsNav = [
   {
@@ -36,6 +36,7 @@ const itemsNav = [
 ];
 
 const AppBar = () => {
+  const categories = [] as any[];
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const handleDropdownClick = () => {

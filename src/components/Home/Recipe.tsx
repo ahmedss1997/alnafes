@@ -1,25 +1,32 @@
 "use client";
 
 import Image from "next/image";
-import Recipe1 from "../../../public/assets/Recipe1.png"
+import Recipe1 from "../../../public/assets/Recipe1.png";
 // import { useRecipeFilter } from "@/hooks/useRecipe";
 import { IRecipe } from "@/types/types";
-// import { useState } from "react";
-// import { get } from "@/api/server";
+import { useEffect } from "react";
 
 const Recipes = () => {
-  const RecipesList: IRecipe[] = [];
+  const RecipesList = [] as IRecipe[];
+  // const RecipeFilter = useRecipeFilter();
   // const [RecipesList, setReceipesList] = useState<IRecipe[] | null>(null);
 
   // const getRecipes = () => {
-  //   get(`api/Recipe/Filter`, false, {MaxPageSize: 4}).then((res) => {
-  //     setReceipesList(res.result);
-  //   })
-  // }
+  //   RecipeFilter.mutate({MaxPageSize: 4}, {
+  //     onSuccess: (data) => {
+  //       setReceipesList(data.result)
+  //       console.log('Recipes successful!', data.result);
+  //     },
+  //     onError: (error) => {
+  //       console.error('Recipes failed:', error);
+  //     },
+  //   });
+  // };
 
-  // useEffect (() => {
-  //   getRecipes();
-  // }, [])
+  useEffect (() => {
+    // getRecipes();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="container mx-auto px-4 py-5 sm:px-6 lg:px-8 text-center">

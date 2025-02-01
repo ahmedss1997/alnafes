@@ -28,7 +28,7 @@ export default function NotifySuccess ({product,setOpenNotifySuccess}: {product:
                             </p>
                         </div>
                             
-                        <div className="flex items-center py-4 grid grid-cols-1 lg:grid-cols-3 gap-4 text-center">
+                        <div className="items-center py-4 grid grid-cols-1 lg:grid-cols-3 gap-4 text-center">
                             <Link href="/cart" className="text-center text-white bg-primary rounded-md px-3 py-2 mt-3 lg:col-span-2"> 
                                 Go to cart 
                             </Link>

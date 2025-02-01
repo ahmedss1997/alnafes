@@ -1,15 +1,22 @@
 "use client";
 
 import { iProduct } from "@/code/dataModels";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import avatar from "../../../../../public/assets/avatart.png";
 import { FaStar } from "react-icons/fa";
 import { useState } from "react";
 
+export interface IReview {
+  id: number,
+  name: string,
+  image: StaticImageData,
+  stars: number,
+  text: string
+}
 
 export default function ProductPreview({ product }: { product: iProduct }) {
   // State for reviews
-  const [reviews, setReviews] = useState([]);
+  const [reviews, setReviews] = useState<IReview[]>([]);
   const [newReview, setNewReview] = useState("");
   const [selectedStars, setSelectedStars] = useState(0);
 

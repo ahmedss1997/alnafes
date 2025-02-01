@@ -4,7 +4,6 @@ import { useMutation } from '@tanstack/react-query';
 import { get, post } from '@/api/server';
 import { ILoginRequest, IRegisterRequest } from '@/types/types';
 
-// Hook for login uselogin(aa)
 export const useLogin = () =>
   useMutation({
     mutationFn: (request: ILoginRequest) => post(`api/Auth/Login`, request, false),
