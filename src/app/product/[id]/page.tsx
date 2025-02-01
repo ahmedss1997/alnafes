@@ -8,20 +8,22 @@ import ProductTabs from "./productTabs";
 import products from "@/code/products_db";
 import ProductCardCol from "@/components/Home/productCardCol";
 
-export default function Product({ params }: { params: { id: string } }) {
+export default function Product({ params }: { params: Promise<{ id: string }> }) {
   const [product, setProduct] = useState<iProduct | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const productsList = products.slice(0, 4);
 
   useEffect(() => {
-    const findProduct = products.find(
-      (product) => product.id == parseInt(params.id)
-    );
-    if (findProduct) setProduct(findProduct);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  }, [params.id]);
+    params.then((params: { id: string }) => {
+        const findProduct = products.find(
+          (product) => product.id == parseInt(params.id)
+        );
+        if (findProduct) setProduct(findProduct);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
+    });
+  }, [params]);
 
   return (
     <main dir="ltr">
