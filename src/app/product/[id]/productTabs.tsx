@@ -1,13 +1,14 @@
 "use client";
 
-import { iProduct } from "@/code/dataModels";
+
+import { IProduct } from "@/types/types";
 import * as tabContent from "./product_TabsContent";
 import { JSX, useEffect, useState } from "react";
 
-export default function ProductTabs({product}: {product: iProduct}) {
+export default function ProductTabs({product}: {product: IProduct | null}) {
   const [activeTab, setActiveTab] = useState("description");
   const TabContent: any = tabContent;
-  const [ActiveContent, setActiveContent] = useState<(({product}: {product: iProduct}) => JSX.Element) | null>(null); // Initialize as null
+  const [ActiveContent, setActiveContent] = useState<(({product}: {product: IProduct}) => JSX.Element) | null>(null); // Initialize as null
   const tabs = [
     {
       id: "description",
@@ -41,7 +42,7 @@ export default function ProductTabs({product}: {product: iProduct}) {
       </div>
       <div className="lg:basis-3/4 basis-full">
         <div className="">
-          {ActiveContent && <ActiveContent product={product}/>}{" "}
+          {ActiveContent && product && <ActiveContent product={product}/>}{" "}
           {/* Render ActiveContent if it's not null */}
         </div>
       </div>

@@ -1,6 +1,6 @@
-import { iProduct } from "./dataModels";
+import { IProduct } from "./dataModels";
 
-const products: iProduct[] = [
+const products: IProduct[] = [
   {
     "id": 1,
     "name": "Product 1",

@@ -1,5 +1,5 @@
 "use client";
-import { iProduct } from "@/code/dataModels";
+import { IProduct } from "@/code/dataModels";
 import {useContext, useEffect, useState } from "react";
 import { RiHeartFill, RiHeartLine } from "react-icons/ri";
 import { MdOutlineMinimize } from "react-icons/md";
@@ -14,7 +14,7 @@ import PointsImg from "../../public/assets/points.png";
 const ProductCardCol = ({
   product,
 }: {
-  product: iProduct;
+  product: IProduct;
 }) => {
   const { G_productsInCart, setG_ProductsInCart } = useContext(GlobalContext);
   const defaultImg = product.imagesUrl[0] ? product.imagesUrl[0].url : "";

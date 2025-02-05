@@ -21,7 +21,7 @@ export interface iUserAddress {
   isDefault: boolean;
 }
 
-export interface iProduct {
+export interface IProduct {
   id: number;
   name: string;
   price: number;
@@ -45,7 +45,7 @@ export interface iProduct {
   warranty: string;
 }
 
-export interface iProductInCart extends iProduct {
+export interface iProductInCart extends IProduct {
   quantity: number;
 }
 

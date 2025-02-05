@@ -1,26 +1,27 @@
 "use client";
 
-import { iProduct } from "@/code/dataModels";
+// import { IProduct } from "@/code/dataModels";
 import { useContext, useEffect, useState } from "react";
-import Image from "next/image";
+// import Image from "next/image";
 import Link from "next/link";
 import GlobalContext from "@/code/globalContext";
 import { MdOutlineMinimize } from "react-icons/md";
 import { GoPlus } from "react-icons/go";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import Stars from "../../../../public/assets/stars.png";
+// import Stars from "../../../../public/assets/stars.png";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
+import { IProduct } from "@/types/types";
+import { FaStar } from "react-icons/fa";
 // import Link from "next/link";
 
-export default function ProductPreview({ product }: { product: iProduct }) {
+export default function ProductPreview({ product }: { product: IProduct | null }) {
   const { G_productsInCart, setG_ProductsInCart } = useContext(GlobalContext);
-  const defaultImg = product.imagesUrl[0] ? product.imagesUrl[0].url : "";
   const [productCount, setProductCount] = useState(1);
   const [productInCart, setProductInCart] = useState(false);
   const [productIsFav, setProductFav] = useState(false);
 
   const handleIncrement = () => {
-    if (productCount < product.stock) {
+    if (productCount < (product?.quantity || 0)) {
       setProductCount(productCount + 1);
     }
   };
@@ -39,31 +40,54 @@ export default function ProductPreview({ product }: { product: iProduct }) {
     setProductFav(!productIsFav);
   };
   useEffect(() => {
-    if (productInCart && !G_productsInCart.some(x => x.id == product.id)) {
+    if (productInCart && product && !G_productsInCart.some(x => x.id == product.id)) {
       setProductCount(productCount || 1);
-      setG_ProductsInCart([...G_productsInCart, { ...product, quantity: productCount }]);
-    } else if (productInCart && G_productsInCart.some(x => x.id == product.id)) {
+      setG_ProductsInCart([...G_productsInCart, {
+        ...product, quantity: productCount,
+        name: "",
+        price: 0,
+        discountPrice: 0,
+        persent: "",
+        currency: "",
+        rate: "",
+        imagesUrl: [],
+        description: "",
+        model: "",
+        stock: 0,
+        categoryId: 0,
+        categoryName: "",
+        rating: 0,
+        matrial: "",
+        color: "",
+        size: "",
+        SKU: "",
+        reviews: [],
+        tags: [],
+        warranty: ""
+      }]);
+    } else if (productInCart && product && G_productsInCart.some(x => x.id == product.id)) {
       const index = G_productsInCart.findIndex(x => x.id == product.id);
       const products = [...G_productsInCart];
       products[index].quantity = productCount;
       setG_ProductsInCart(products);
-    } else if (!productInCart && !productCount && G_productsInCart.some(x => x.id == product.id)) {
+    } else if (!productInCart && product && !productCount && G_productsInCart.some(x => x.id == product.id)) {
       setG_ProductsInCart(G_productsInCart.filter(x => x.id != product.id));
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productInCart, productCount])
 
+  const averageRate = product?.item?.averageRate || 0;
+
   return (
     <div className="flex flex-wrap">
       <div className="basis-full lg:basis-1/2 mb-6">
-        <div className="product-img ">
-          <Image
-            loader={() => defaultImg}
-            src={defaultImg}
-            alt={product.name}
+        <div className="product-img">
+          <img
+            src={product?.item?.image || ""}
+            alt={product?.item?.name || ""}
             width={600}
             height={600}
-            className="rounded-lg"
+            className="rounded-lg w-full h-full"
           />
         </div>
       </div>
@@ -72,13 +96,13 @@ export default function ProductPreview({ product }: { product: iProduct }) {
           {/* Div With Title */}
           <div className="flex items-center justify-between mb-2">
             <h3 className="text-lg text-bgGrayText800 font-medium">
-              <Link href={`/product/${product.id}`}>
-                {product.name}
+              <Link href={`/product/${product?.id}`}>
+                {product?.item?.name}
               </Link>
             </h3>
             <span
               className={`h-11 w-11 rounded-full border border-[#39545D] bg-onSurface flex justify-center items-center cursor-pointer ${
-                product.stock == 0 ? "hidden" : "block"
+                product?.quantity == 0 ? "hidden" : "block"
               }`}
               onClick={() => toggleActiveIconHeart()}
             >
@@ -91,18 +115,25 @@ export default function ProductPreview({ product }: { product: iProduct }) {
           </div>
           {/* Div With Rating */}
           <div className="flex items-center gap-2">
-            <Image
-              src={Stars}
-              className=""
-              width={100}
-              alt="product-star"
-            />
+            <div className="flex gap-1">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <FaStar
+                  key={star}
+                  className={`${
+                    star <= averageRate ? "text-yellow-500" : "text-gray-300"
+                  }`}
+                />
+              ))}
+            </div>
+            <span className="text-sm text-[#39545D] font-medium">
+              ({averageRate === null ? 0 : averageRate})
+            </span>
           </div>
           {/* Div With Price */}
           <div className="my-5">
             <div className="">
             <span className="text-base text-bgGrayText500 font-medium">Price:</span> 
-            <span className="mx-2 text-bgGrayText800 text-xl font-medium">{product.discountPrice || product.price} {product.currency}</span>
+            <span className="mx-2 text-bgGrayText800 text-xl font-medium">{product?.item?.discount || product?.item?.price} JOD</span>
             </div>
           </div>
           {/* Div With Time Taken */}
@@ -141,7 +172,7 @@ export default function ProductPreview({ product }: { product: iProduct }) {
           <div className="add-cart flex items-center gap-2 relative mt-8">
             <div className="w-full flex justify-between lg:h-11 h-9">
               {/* Button With Buy Now */}
-              {!productInCart && product.stock > 0 && (
+              {!productInCart && (product?.quantity || 0) > 0 && (
                 <div className="w-full flex justify-between items-center gap-4">
                   <Link className="text-onSurface  flex justify-center items-center lg:text-base text-sm font-semibold w-full h-full rounded-lg border border-solid border-primary bg-primary cursor-pointer" href={"/cart"}>
                     <button

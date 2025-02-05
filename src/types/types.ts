@@ -73,3 +73,86 @@ export interface IRecipeFilterRequest {
   Sort?: string
 }
 // #endregion
+
+//#region Category
+
+export interface ICategory {
+  name: string
+  ar_Name: string
+  image: string
+  section: number
+  id: number
+  createdDate: string
+  isActive: boolean
+}
+
+export interface ICategoryFilterRequest {
+  Name?: string,
+  Section?: number,
+  MaxPageSize?: number,
+  PageSize?: number,
+  PageNumber?: number,
+  Id?: number,
+  Search?: string,
+  Sort?: string
+}
+export interface ISubCategoryFilterRequest {
+  CategoryName?: string,
+  Section?: number,
+  CategoryId?: number,
+  MaxPageSize?: number,
+  PageSize?: number,
+  PageNumber?: number,
+  Id?: number,
+  Search?: string,
+  Sort?: string
+}
+// #endregion
+
+
+//#region Products
+
+export interface IProduct {
+  orderId: number
+  itemId: number
+  item: IProductItem
+  quantity: number
+  id: number
+  createdDate: string
+  isActive: boolean
+}
+
+export interface IProductItem {
+  name: string
+  ar_Name: string
+  description: string
+  ar_Description: string
+  image: string
+  price: number
+  discount: number
+  quantity: number
+  weight: number
+  isFavorite: any
+  averageRate: any
+  timeTaken: string
+  subCategoryId: number
+  subCategory: any
+  ingredients: any[]
+  id: number
+  createdDate: string
+  isActive: boolean
+}
+
+export interface iProductFilterRequest {
+  Name?: string,
+  Section?: number,
+  MaxPageSize?: number,
+  PageSize?: number,
+  PageNumber?: number,
+  Id?: number,
+  Search?: string,
+  Sort?: string
+}
+
+// #endregion
+

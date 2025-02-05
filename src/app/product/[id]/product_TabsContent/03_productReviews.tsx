@@ -1,6 +1,6 @@
 "use client";
 
-import { iProduct } from "@/code/dataModels";
+import { IProduct } from "@/types/types";
 import Image, { StaticImageData } from "next/image";
 import avatar from "../../../../../public/assets/avatart.png";
 import { FaStar } from "react-icons/fa";
@@ -14,7 +14,7 @@ export interface IReview {
   text: string
 }
 
-export default function ProductPreview({ product }: { product: iProduct }) {
+export default function ProductPreview({ product }: { product: IProduct }) {
   // State for reviews
   const [reviews, setReviews] = useState<IReview[]>([]);
   const [newReview, setNewReview] = useState("");
@@ -48,7 +48,7 @@ export default function ProductPreview({ product }: { product: iProduct }) {
   return (
     <div className="container px-0">
       {/* loop over addresses and display them in cards */}
-      {product.reviews.length ? (
+      {product ? (
         <div className="border border-borderLineGray rounded-md overflow-hidden">
           <div className="bg-bgGrayText50 border-b border-borderLineGray p-5">
             <h3 className="font-medium text-blackText text-xl ">Reviews</h3>

@@ -1,31 +1,32 @@
 "use client";
-import { iProduct } from "@/code/dataModels";
+
 import {useContext, useEffect, useState } from "react";
 import { MdOutlineMinimize } from "react-icons/md";
 import { GoPlus } from "react-icons/go";
 import GlobalContext from "@/code/globalContext";
 import Link from "next/link";
 import NotifySign from "../notifyModel/notify_sign";
-import Image from "next/image";
-import Stars from "../../../public/assets/stars.png";
+// import Image from "next/image";
 import NotifySuccess from "../notifyModel/notify_success";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
+import { IProduct } from "@/types/types";
+import { FaStar } from "react-icons/fa";
 
 const ProductCardCol = ({
   product,
 }: {
-  product: iProduct;
+  product: IProduct;
 }) => {
   const { G_productsInCart, setG_ProductsInCart } = useContext(GlobalContext);
-  const defaultImg = product.imagesUrl[0] ? product.imagesUrl[0].url : "";
+  const defaultImg = product.item.image;
   const [productCount, setProductCount] = useState(1);
   const [productIsFav, setProductFav] = useState(false);
   const [productInCart, setProductInCart] = useState(false);
   const [openNotify, setOpenNotify] = useState(false);
   const [openNotifySuccess, setOpenNotifySuccess] = useState(false);
   const handleIncrement = () => {
-    if (productCount < product.stock) {
+    if (productCount < product.quantity) {
       setProductCount(productCount + 1);
     }
   };
@@ -47,7 +48,29 @@ const ProductCardCol = ({
   useEffect(() => {
     if (productInCart && !G_productsInCart.some(x => x.id == product.id)) {
       setProductCount(productCount || 1);
-      setG_ProductsInCart([...G_productsInCart, { ...product, quantity: productCount }]);
+      setG_ProductsInCart([...G_productsInCart, {
+        ...product, quantity: productCount,
+        name: "",
+        price: 0,
+        discountPrice: 0,
+        persent: "",
+        currency: "",
+        rate: "",
+        imagesUrl: [],
+        description: "",
+        model: "",
+        stock: 0,
+        categoryId: 0,
+        categoryName: "",
+        rating: 0,
+        matrial: "",
+        color: "",
+        size: "",
+        SKU: "",
+        reviews: [],
+        tags: [],
+        warranty: ""
+      }]);
     } else if (productInCart && G_productsInCart.some(x => x.id == product.id)) {
       const index = G_productsInCart.findIndex(x => x.id == product.id);
       const products = [...G_productsInCart];
@@ -59,30 +82,29 @@ const ProductCardCol = ({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productInCart, productCount])
 
+  const averageRate = product.item.averageRate || 0;
+
   return (
     <div className="product-content bg-onSurface border-2 border-solid border-bgGrayText400 rounded-md overflow-hidden ">
-      <div className="img-product-home relative ">
-        <Link href={`/product/${product.id}`}>
-          <Image
-            loader={() => defaultImg}
+      <div className="img-product-home relative h-[250px]">
+        <Link href={`/product/${product.id}`} className="w-full h-full">
+          <img
             src={defaultImg}
-            className="w-full rounded-t-md"
-            width={200}
-            height={250}
+            className="w-full h-full rounded-t-md"
             alt="product-home"
           />
         </Link>
         <div className="absolute top-0 p-5 w-full flex items-center justify-between">
           <button
             className={`text-sm font-normal rounded-md px-3 py-1 cursor-pointer ${
-              product.stock == 0 ? "bg-redColor text-onSurface" : "text-primary bg-onSurface"
+              product.quantity == 0 ? "bg-redColor text-onSurface" : "text-primary bg-onSurface"
             }`}
           >
-            {product.stock == 0 ? "Out of Stock" : "-40%"}
+            {product.quantity == 0 ? "Out of Stock" : "-40%"}
           </button>
           <span
             className={`h-11 w-11 rounded-full border border-[#39545D] bg-onSurface flex justify-center items-center cursor-pointer ${
-              product.stock == 0 ? "hidden" : "block"
+              product.quantity == 0 ? "hidden" : "block"
             }`}
             onClick={() => toggleActiveIconHeart()}
           >
@@ -95,30 +117,37 @@ const ProductCardCol = ({
         </div>
       </div>
       <div className="caption-product-home bg-bgGrayText50 p-5">
-        <p className="text-sm text-bgGrayText400 font-semibold mb-2"> {product.categoryName} </p>
+        <p className="text-sm text-bgGrayText400 font-semibold mb-2"> {product.item.subCategory === null ? "Falafel" : product.item.subCategory} </p>
         <h3 className="text-lg text-bgGrayText800 font-medium">
           <Link href={`/product/${product.id}`}>
-            {product.name}
+            {product.item.name}
           </Link>
         </h3>
+        {/* Star Rating Section */}
         <div className="flex items-center gap-2">
-          <Image
-            src={Stars}
-            className=""
-            width={100}
-            alt="product-star"
-          />
-          <span className="text-sm text-[#39545D] font-medium">{product.rate}</span>
+          <div className="flex gap-1">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <FaStar
+                key={star}
+                className={`${
+                  star <= averageRate ? "text-yellow-500" : "text-gray-300"
+                }`}
+              />
+            ))}
+          </div>
+          <span className="text-sm text-[#39545D] font-medium">
+            ({averageRate === null ? 0 : averageRate})
+          </span>
         </div>
         {/* Div With Price */}
         <div className="my-2">
           <span className="text-base text-redColor font-medium">
-            {product.discountPrice || product.price} {product.currency}
+            {product.item.discount || product.item.price} JOD
           </span>
           {
-            product.discountPrice ? (
+            product.item.discount ? (
               <span className="text-base text-[#39545D] font-medium lg:mx-3 ml-1 line-through">
-                {product.price} {product.currency}
+                {product.item.price} JOD
               </span>
             ) : null
           }
@@ -152,7 +181,7 @@ const ProductCardCol = ({
         <div className="add-cart flex items-center gap-2 relative mt-5">
           <div className="w-full flex justify-between lg:h-11 h-9">
             {/* Button With Notify Me */}
-            {product.stock == 0 && (
+            {product.quantity == 0 && (
               <div className="w-full flex justify-between items-center">
                 <button
                   onClick={() => setOpenNotify(true)}
@@ -168,7 +197,7 @@ const ProductCardCol = ({
               </div>
             )}
             {/* Button With Buy Now */}
-            {product.stock > 0 && (
+            {product.quantity > 0 && (
               <div className="w-full flex justify-between items-center">
                 <Link className="text-onSurface  flex justify-center items-center lg:text-base text-sm font-semibold max-w-[200px] w-full h-full rounded-lg border border-solid border-primary bg-primary cursor-pointer" href={"/cart"}>
                   <button

@@ -1,60 +1,38 @@
-"use client";
-import { iProduct } from "@/code/dataModels";
-import { useEffect, useState } from "react";
-import ProductSkeleton from "./productSkeleton";
-import { BsFillInfoCircleFill } from "react-icons/bs";
-import ProductPreview from "./productPreview";
-import ProductTabs from "./productTabs";
-import products from "@/code/products_db";
-import ProductCardCol from "@/components/Home/productCardCol";
+import { get } from "@/api/serverSide";
+import { iProductFilterRequest } from "@/types/types";
+import ProductClient from "./ProductClient";
 
-export default function Product({ params }: { params: Promise<{ id: string }> }) {
-  const [product, setProduct] = useState<iProduct | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const productsList = products.slice(0, 4);
+// Server-side method for fetching filtered products
+export const fetchProductsFilter = async (params: iProductFilterRequest) => {
+  try {
+    const data = await get("api/ItemOrder/Filter", false, params);
+    return data.result;
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    throw error;
+  }
+};
 
-  useEffect(() => {
-    params.then((params: { id: string }) => {
-        const findProduct = products.find(
-          (product) => product.id == parseInt(params.id)
-        );
-        if (findProduct) setProduct(findProduct);
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 1000);
-    });
-  }, [params]);
+// Server-side method for fetching a single product
+export const fetchSingleProduct = async (id: number) => {
+  try {
+    const data = await get("api/ItemOrder/Filter", false, { Id: id });
+    return data.result ? data.result[0] : null;
+  } catch (error) {
+    console.error("Error fetching single product:", error);
+    throw error;
+  }
+};
+
+export default async function Page({ params }: { params: { id: string } }) {
+  const productId = parseInt(params.id);
+
+  const [productData, relatedProductsData] = await Promise.all([
+    fetchSingleProduct(productId),
+    fetchProductsFilter({ MaxPageSize: 20 }), // Example params for related products
+  ]);
 
   return (
-    <main dir="ltr">
-      <div className="container mx-auto px-3 md:px-6 py-12">
-        {/* Fetching data */}
-        {isLoading && <ProductSkeleton />}
-        {/* Product not found */}
-        {!isLoading && !product && (
-          <div className="text-center">
-            <BsFillInfoCircleFill className="text-5xl text-captionColor mx-auto mb-3" />
-            <p className="text-blackText text-2xl">Product not found!</p>
-          </div>
-        )}
-        {/* Product found */}
-        {!isLoading && product && (
-          <>
-            <ProductPreview product={product} />
-            <div className="mt-6">
-              <ProductTabs product={product} />
-            </div>
-            <div className="container px-0">
-              <h2 className="text-4xl text-primary font-normal my-3">Trust us, you will love</h2>
-              <div className="grid lg:grid-cols-4 grid-cols-2 gap-4">
-                {productsList.map((product) => (
-                  <ProductCardCol product={product} key={product.id} />
-                ))}
-              </div>
-            </div>
-          </>
-        )}
-      </div>
-    </main>
+    <ProductClient initialProduct={productData} initialProductsList={relatedProductsData} />
   );
 }

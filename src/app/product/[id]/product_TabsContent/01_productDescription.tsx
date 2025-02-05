@@ -1,11 +1,11 @@
 "use client";
 
-import { iProduct } from "@/code/dataModels";
+import { IProduct } from "@/types/types";
 
-export default function ProductDescription({ product }: { product: iProduct }) {
+export default function ProductDescription({ product }: { product: IProduct }) {
   return (
     <div className="container px-0">
-      <p>{product.description}</p>
+      <p>{product.item.description}</p>
     </div>
   );
 }

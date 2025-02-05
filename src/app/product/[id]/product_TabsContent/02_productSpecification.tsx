@@ -1,8 +1,8 @@
 "use client";
 
-import { iProduct } from "@/code/dataModels";
+import { IProduct } from "@/code/dataModels";
 
-export default function ProductSpecification({ }: { product: iProduct }) {
+export default function ProductSpecification({ }: { product: IProduct }) {
 
   return (
     <div className="container px-0">

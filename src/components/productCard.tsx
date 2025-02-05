@@ -1,6 +1,6 @@
 "use client";
 
-import { iProduct } from "@/code/dataModels";
+import { IProduct } from "@/code/dataModels";
 import { ReactNode, useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import { MdOutlineMinimize } from "react-icons/md";
@@ -10,7 +10,7 @@ const ProductCard = ({
   product,
   children,
 }: {
-  product: iProduct;
+  product: IProduct;
   children?: ReactNode;
 }) => {
   const { G_productsInCart, setG_ProductsInCart } = useContext(GlobalContext);
