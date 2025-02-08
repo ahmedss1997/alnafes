@@ -156,3 +156,73 @@ export interface iProductFilterRequest {
 
 // #endregion
 
+//#region Reviews
+
+export interface IReviews {
+  userId: number
+  user: User
+  itemId: number
+  item: IReviewItem
+  rateNumber: number
+  comment: string
+  id: number
+  createdDate: string
+  isActive: boolean
+}
+
+export interface IReviewItem {
+  name: string
+  ar_Name: string
+  description: string
+  ar_Description: string
+  image: string
+  price: number
+  discount: number
+  quantity: number
+  weight: number
+  isFavorite: any
+  averageRate: any
+  timeTaken: string
+  subCategoryId: number
+  subCategory: any
+  ingredients: any[]
+  id: number
+  createdDate: string
+  isActive: boolean
+}
+
+export interface User {
+  firstName: string
+  lastName: string
+  email: string
+  image: string
+  phoneNumber: string
+  isVerified: boolean
+  role: number
+  address: any
+  token: any
+  id: number
+  createdDate: string
+  isActive: boolean
+}
+
+export interface iReviewFilterRequest {
+  Name?: string,
+  Section?: number,
+  MaxPageSize?: number,
+  PageSize?: number,
+  PageNumber?: number,
+  Id?: number,
+  Search?: string,
+  Sort?: string
+}
+
+export interface IReviewRequest {
+  id: number
+  userId?: number
+  itemId: number
+  rateNumber: number
+  comment: string
+}
+
+// #endregion

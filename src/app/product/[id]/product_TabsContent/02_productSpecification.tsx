@@ -5,7 +5,7 @@ import { IProduct } from "@/code/dataModels";
 export default function ProductSpecification({ }: { product: IProduct }) {
 
   return (
-    <div className="container px-0">
+    <div className="container-fluid mx-auto px-4 py-5 sm:px-6 lg:px-8">
       <ul className="list-disc">
         <li>Homemade falafel: Crafted with fresh ingredients and fried to crispy perfection.</li>
         <li>Creamy tahini sauce: Smooth and flavorful, it balances the sandwich is other elements.</li>

@@ -118,7 +118,7 @@ const ProductCardCol = ({
       </div>
       <div className="caption-product-home bg-bgGrayText50 p-5">
         <p className="text-sm text-bgGrayText400 font-semibold mb-2"> {product.item.subCategory === null ? "Falafel" : product.item.subCategory} </p>
-        <h3 className="text-lg text-bgGrayText800 font-medium">
+        <h3 className="text-base lg:text-lg text-bgGrayText800 font-medium">
           <Link href={`/product/${product.id}`}>
             {product.item.name}
           </Link>
@@ -155,24 +155,24 @@ const ProductCardCol = ({
         {/* Div With Countity Add To Cart */}
         <div className="countity flex items-center">
           <span className="text-xs text-bgGrayText400 font-medium ">Quantity:</span>
-          <div className="flex items-center gap-4 mx-2 mb-2">
+          <div className="flex items-center gap-2 lg:gap-4 mx-2 mb-2">
             <span
-              className="h-9 w-9 rounded-full border border-bgGrayText800 bg-OnSurface flex justify-center items-center cursor-pointer"
+              className="w-7 h-7 lg:h-9 lg:w-9 rounded-full border border-bgGrayText800 bg-OnSurface flex justify-center items-center cursor-pointer"
               onClick={() => handleDecrement()}
             >
               <MdOutlineMinimize
-                className={`transition-all duration-500 ease-in-out text-2xl mb-3`}
+                className={`transition-all duration-500 ease-in-out text-lg lg:text-2xl mb-3`}
               />
             </span>
             <span className="flex justify-center items-center text-lg text-bgGrayText800 font-medium cursor-pointer">
               {productCount}
             </span>
             <span
-              className="h-9 w-9 rounded-full border border-bgGrayText800 bg-OnSurface flex justify-center items-center cursor-pointer"
+              className="w-7 h-7 lg:h-9 lg:w-9 rounded-full border border-bgGrayText800 bg-OnSurface flex justify-center items-center cursor-pointer"
               onClick={() => handleIncrement()}
             >
               <GoPlus
-                className={`transition-all duration-500 ease-in-out text-2xl`}
+                className={`transition-all duration-500 ease-in-out text-lg lg:text-2xl`}
               />
             </span>
           </div>
@@ -198,8 +198,8 @@ const ProductCardCol = ({
             )}
             {/* Button With Buy Now */}
             {product.quantity > 0 && (
-              <div className="w-full flex justify-between items-center">
-                <Link className="text-onSurface  flex justify-center items-center lg:text-base text-sm font-semibold max-w-[200px] w-full h-full rounded-lg border border-solid border-primary bg-primary cursor-pointer" href={"/cart"}>
+              <div className="w-full flex justify-between items-center gap-3">
+                <Link className="text-onSurface flex justify-center items-center lg:text-base text-sm font-semibold w-[80px] lg:max-w-[200px] lg:w-full h-full rounded-lg border border-solid border-primary bg-primary cursor-pointer" href={"/cart"}>
                   <button
                     onClick={() => setProductInCart(true)}
                     >
@@ -207,7 +207,7 @@ const ProductCardCol = ({
                   </button>
                 </Link>
                 <span
-                  className="h-11 w-11 rounded-full border border-[#39545D] bg-OnSurface flex justify-center items-center cursor-pointer"
+                  className="w-8 h-8 lg:h-11 lg:w-11 rounded-full border border-[#39545D] bg-OnSurface flex justify-center items-center cursor-pointer"
                 >
                   <AiOutlineShoppingCart className="lg:text-primary text-graySubText text-xl cursor-pointer" />
                 </span>

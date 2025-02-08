@@ -10,7 +10,7 @@ const About = () => {
       <div className="row-all w-full flex flex-wrap">
         <div className="col-item p-3 lg:max-w-[40%] lg:basis-2/5 max-w-[100%] basis-full">
           <div className="w-full h-full flex items-center">
-            <div className="max-w-[500px] max-h-[425px] p-3">
+            <div className="max-w-[500px] lg:max-h-[425px] p-3">
               <h3 className="text-5xl text-primary">About us</h3>
               <p className="text-lg text-graySubText leading-7 my-3">
                 Welcome to Ibn Al-Nafis! We are a family-owned bakery, baking delicious treats with love for generations. We use fresh, local ingredients to create mouthwatering pastries, breakfasts, and desserts. Come join us for a taste of tradition and share the joy of baking!
@@ -23,14 +23,14 @@ const About = () => {
         </div>
         <div className="col-item p-3 lg:max-w-[60%] lg:basis-3/5 max-w-[100%] basis-full ">
           <div className="row-all w-full flex flex-wrap">
-            <div className="col-item p-3 lg:max-w-[40%] lg:basis-2/5 lg:block max-w-[100%] basis-full flex gap-5 ">
+            <div className="col-item p-3 lg:max-w-[40%] lg:basis-2/5 block max-w-[100%] basis-full ">
               <Image
                 className="min-h-[210px] w-full lg:mb-6"
                 src={About1}
                 alt=""
               />
               <Image
-                className="max-h-[315px] h-[315px] w-full"
+                className="max-h-[315px] h-[315px] w-full mt-5 lg:mt-0"
                 src={About2}
                 alt=""
               />

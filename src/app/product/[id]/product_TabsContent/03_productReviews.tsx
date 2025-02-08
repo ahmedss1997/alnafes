@@ -1,50 +1,75 @@
 "use client";
 
-import { IProduct } from "@/types/types";
-import Image, { StaticImageData } from "next/image";
+import { IProduct, IReviews } from "@/types/types";
+// import Image from "next/image";
 import avatar from "../../../../../public/assets/avatart.png";
 import { FaStar } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAddReview, useReviewsFilter } from "@/hooks/useReviews";
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../../store';
 
-export interface IReview {
-  id: number,
-  name: string,
-  image: StaticImageData,
-  stars: number,
-  text: string
-}
 
 export default function ProductPreview({ product }: { product: IProduct }) {
-  // State for reviews
-  const [reviews, setReviews] = useState<IReview[]>([]);
   const [newReview, setNewReview] = useState("");
   const [selectedStars, setSelectedStars] = useState(0);
-
-  // Temporary user data
-  const userName = "Jane Doe";
-  const userAvatar = avatar;
+  const addReview = useAddReview();
+  const { currentUser } = useSelector((state: RootState) => state.auth);
 
   // Handle star selection
   const handleStarClick = (rating: number) => {
     setSelectedStars(rating);
   };
 
+  const getReviews = useReviewsFilter();
+  const [reviewsList, setReviewsList] = useState<IReviews[]>([]);
+  useEffect(() => {
+    return getReviews.mutate(
+      { MaxPageSize: 4 },
+      {
+        onSuccess: (data) => {
+          console.log("donee", data.result);
+          setReviewsList(data.result);
+        },
+        onError: (error) => {
+          console.error("Recipes failed:", error);
+        },
+      }
+    );
+  }, []);
+
   // Add a new review
   const handleAddReview = () => {
-    if (!newReview.trim()) return; // Prevent adding empty reviews
+    if (!newReview.trim()) return;
 
     const newReviewData = {
-      id: Date.now(), // Unique ID for the review
-      name: userName,
-      image: userAvatar,
-      stars: selectedStars,
-      text: newReview,
+      id: product.id,
+      userId: currentUser?.id || 0,
+      user: {
+        firstName: currentUser?.firstName || "John",
+        lastName: currentUser?.lastName || "Doe",
+        image: currentUser?.image || avatar
+      },
+      itemId: product.itemId,
+      rateNumber: selectedStars,
+      comment: newReview
     };
 
-    setReviews([newReviewData, ...reviews]); // Add new review to the top of the list
-    setNewReview(""); // Reset the textarea
-    setSelectedStars(0); // Reset stars
+    // setReviews([newReviewData, ...reviews]);
+
+
+    addReview.mutate(newReviewData, {
+      onSuccess: (data) => {
+        console.log('Add Review successful!', data);
+        setNewReview("");
+        setSelectedStars(0);
+      },
+      onError: (error: any) => {
+        console.error('Add Review failed:', error.response);
+      },
+    });
   };
+
   return (
     <div className="container px-0">
       {/* loop over addresses and display them in cards */}
@@ -57,8 +82,8 @@ export default function ProductPreview({ product }: { product: IProduct }) {
             {/* Write A Review */}
             <div className=" flex gap-6 p-5 border-b border-borderLineGray my-5">
               <div className="min-w-[100px] h-[100px]">
-                <Image
-                  src={avatar}
+                <img
+                  src={(currentUser?.image === null ? avatar.src : currentUser?.image) || avatar.src}
                   width={100}
                   height={100}
                   alt=""
@@ -96,36 +121,36 @@ export default function ProductPreview({ product }: { product: IProduct }) {
               </div>
             </div>
             {/* Reviews Which are already written */}
-            {reviews.map((review) => (
+            {reviewsList.map((review) => (
               <div
                 key={review.id}
                 className="flex gap-6 p-5 border-b border-borderLineGray my-5"
               >
-                <div className="min-w-[70px] h-[70px]">
-                  <Image
-                    src={review.image}
-                    width={70}
-                    height={70}
+                <div className="w-[110px] h-[110px]">
+                  <img
+                    src={review.item.image}
+                    width={110}
+                    height={110}
                     alt=""
                     className="w-full h-full rounded-full"
                   />
                 </div>
                 <div className="w-full">
                   <h3 className="font-medium text-bgGrayText500 text-base mb-3">
-                    {review.name}
+                    {review.user.firstName + " " + review.user.lastName}
                   </h3>
                   <div className="flex gap-1">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <FaStar
                         key={star}
                         className={`${
-                          star <= review.stars ? "text-yellow-500" : "text-gray-300"
+                          star <= review.rateNumber ? "text-yellow-500" : "text-gray-300"
                         }`}
                       />
                     ))}
                   </div>
                   <p className="font-medium text-bgGrayText800 text-base my-3">
-                    {review.text}
+                    {review.comment}
                   </p>
                 </div>
               </div>
