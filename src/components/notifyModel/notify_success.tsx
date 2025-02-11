@@ -1,10 +1,9 @@
 import { CgClose } from "react-icons/cg";
 import { Dispatch, SetStateAction } from "react";
-// import { IProduct } from "@/code/dataModels";
 import { CiCircleCheck } from "react-icons/ci";
 import Link from "next/link";
-import { IProduct } from "@/types/types";
-export default function NotifySuccess ({product,setOpenNotifySuccess}: {product: IProduct, setOpenNotifySuccess: Dispatch<SetStateAction<boolean>>}) {
+import { IProductItem } from "@/types/types";
+export default function NotifySuccess ({product,setOpenNotifySuccess}: {product: IProductItem, setOpenNotifySuccess: Dispatch<SetStateAction<boolean>>}) {
   return (
     <div className="fixed z-10 top-0 left-0 right-0 bottom-0 bg-overlay">
       <div id="notify-modal" 
@@ -25,7 +24,7 @@ export default function NotifySuccess ({product,setOpenNotifySuccess}: {product:
             <div className="pt-3 pb-3 space-y-4 text-center">
               <CiCircleCheck className="text-5xl text-success mx-auto" />
               <p className="text-sm leading-relaxed text-blackSubText ">
-                Success: You have added {product.item.name} to your wish list.
+                Success: You have added {product.name} to your wish list.
               </p>
             </div>
             <div className="items-center py-4 grid grid-cols-1 lg:grid-cols-3 gap-4 text-center">

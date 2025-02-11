@@ -1,8 +1,6 @@
 
-import { fetchSingleProduct, fetchProductsFilter } from "@/lib/productApi";
+import { fetchSingleProduct, fetchProducts } from "@/lib/productApi";
 import ProductClient from "./ProductClient";
-
-
 
 export default async function Page({ params }: { params: { id: string } }) {
   // const productId = parseInt(params.id);
@@ -18,10 +16,10 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   const [productData, relatedProductsData] = await Promise.all([
     fetchSingleProduct(productId),
-    fetchProductsFilter({ MaxPageSize: 20 }), // Example params for related products
+    fetchProducts(), // Example params for related products
   ]);
 
   return (
-    <ProductClient initialProduct={productData} initialProductsList={relatedProductsData} />
+    <ProductClient initialProduct={productData} initialProductsList={relatedProductsData.slice(0, 20)} />
   );
 }

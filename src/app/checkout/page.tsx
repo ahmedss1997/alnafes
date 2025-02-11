@@ -1,6 +1,17 @@
+"use client"
+
+import { selectCartTotal, selectCartTotalDiscount, selectCartTotalWithDiscount } from "@/store/slices/cartSlice";
 import Link from "next/link"
+import { useSelector } from "react-redux";
 
 const Chekout = () => {
+
+  const total = useSelector(selectCartTotal);
+  const discount = useSelector(selectCartTotalDiscount);
+  const totalWithDiscount = useSelector(selectCartTotalWithDiscount);
+  const deliveryCost = 50;
+  const finalTotal = totalWithDiscount + deliveryCost;
+
   return (
     <div className="container mx-auto px-4 py-10 sm:px-6 lg:px-8 ">
       <span className="text-lg text-bgGrayText400 font-medium p-3">Delivery</span>
@@ -109,14 +120,14 @@ const Chekout = () => {
             <div className="flex flex-wrap lg:justify-between justify-center mt-3">
               <span className="text-bgGrayText500 font-medium">Subtotal</span>
               <span className="font-semibold text-xl text-bgGrayText600"> 
-                JOD
+                {total.toFixed(3)}  JOD
               </span>
             </div>
             {/* Delivery */}
             <div className="flex flex-wrap lg:justify-between justify-center mt-3">
               <span className="text-bgGrayText500 font-medium">Delivery:</span>
               <span className="font-semibold text-xl text-bgGrayText600"> 
-                JOD
+                {deliveryCost.toFixed(3)} JOD
               </span>
             </div>
             {/* Discount */}
@@ -125,14 +136,14 @@ const Chekout = () => {
                 Discount:
               </span>
               <span className="font-semibold text-xl text-redColor600"> 
-                JOD
+                {discount.toFixed(3)} JOD
               </span>
             </div>
             {/* Total */}
             <div className="flex flex-wrap lg:justify-between justify-center mt-6 border-t border-bgGrayText300 py-5">
               <span className="text-bgGrayText500 font-semibold">Total</span>
               <span className="font-semibold text-xl text-bgGrayText600"> 
-                JOD
+                {finalTotal.toFixed(3)} JOD
               </span>
             </div>
             {/* Promo code */}

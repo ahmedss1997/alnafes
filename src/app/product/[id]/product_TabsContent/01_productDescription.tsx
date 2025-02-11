@@ -1,11 +1,11 @@
 "use client";
 
-import { IProduct } from "@/types/types";
+import { IProductItem } from "@/types/types";
 
-export default function ProductDescription({ product }: { product: IProduct }) {
+export default function ProductDescription({ product }: { product: IProductItem }) {
   return (
     <div className="container px-0">
-      <p>{product.item.description}</p>
+      <p>{product.description}</p>
     </div>
   );
 }

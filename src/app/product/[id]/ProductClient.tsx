@@ -6,11 +6,11 @@ import { BsFillInfoCircleFill } from "react-icons/bs";
 import ProductPreview from "./productPreview";
 import ProductTabs from "./productTabs";
 import ProductCardCol from "@/components/Home/productCardCol";
-import { IProduct } from "@/types/types";
+import { IProductItem } from "@/types/types";
 
-export default function ProductClient({ initialProduct, initialProductsList }: { initialProduct: IProduct | null; initialProductsList: IProduct[] }) {
-  const [product, setProduct] = useState<IProduct | null>(initialProduct);
-  const [products, setProducts] = useState<IProduct[]>(initialProductsList || []);
+export default function ProductClient({ initialProduct, initialProductsList }: { initialProduct: IProductItem | null; initialProductsList: IProductItem[] }) {
+  const [product, setProduct] = useState<IProductItem | null>(initialProduct);
+  const [products, setProducts] = useState<IProductItem[]>(initialProductsList || []);
   const [isLoading, setIsLoading] = useState(!initialProduct);
 
   // Fetch single product if not provided initially

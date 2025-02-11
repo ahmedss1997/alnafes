@@ -1,14 +1,14 @@
 "use client";
 
 
-import { IProduct } from "@/types/types";
+import { IProductItem } from "@/types/types";
 import * as tabContent from "./product_TabsContent";
 import { JSX, useEffect, useState } from "react";
 
-export default function ProductTabs({product}: {product: IProduct | null}) {
+export default function ProductTabs({product}: {product: IProductItem | null}) {
   const [activeTab, setActiveTab] = useState("description");
   const TabContent: any = tabContent;
-  const [ActiveContent, setActiveContent] = useState<(({product}: {product: IProduct}) => JSX.Element) | null>(null); // Initialize as null
+  const [ActiveContent, setActiveContent] = useState<(({product}: {product: IProductItem}) => JSX.Element) | null>(null); // Initialize as null
   const tabs = [
     {
       id: "description",

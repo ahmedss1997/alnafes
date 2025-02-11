@@ -113,13 +113,13 @@ export interface ISubCategoryFilterRequest {
 //#region Products
 
 export interface IProduct {
-  orderId: number
+  orderId?: number
   itemId: number
   item: IProductItem
   quantity: number
-  id: number
-  createdDate: string
-  isActive: boolean
+  id?: number
+  createdDate?: string
+  isActive?: boolean
 }
 
 export interface IProductItem {
@@ -283,6 +283,33 @@ export interface iOrderFilterRequest {
   Id?: number,
   Search?: string,
   Sort?: string
+}
+
+// #endregion
+
+// #region Favourite
+
+export interface iFavouriteFilterRequest {
+  UserId?: number,
+  ItemId?: number,
+  ItemName?: string,
+  MaxPageSize?: number
+  PageSize?: number,
+  PageNumber?: number,
+  Id?: number,
+  Search?: string,
+  Sort?: string
+}
+
+export interface IFavourite {
+  userId: number
+  user: User
+  itemId: number
+  item: IProductItem
+  isFavorite: boolean
+  id: number
+  createdDate: string
+  isActive: boolean
 }
 
 // #endregion

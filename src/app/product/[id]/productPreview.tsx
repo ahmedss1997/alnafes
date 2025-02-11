@@ -10,11 +10,11 @@ import { GoPlus } from "react-icons/go";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 // import Stars from "../../../../public/assets/stars.png";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
-import { IProduct } from "@/types/types";
+import { IProductItem } from "@/types/types";
 import { FaStar } from "react-icons/fa";
 // import Link from "next/link";
 
-export default function ProductPreview({ product }: { product: IProduct | null }) {
+export default function ProductPreview({ product }: { product: IProductItem | null }) {
   const { G_productsInCart, setG_ProductsInCart } = useContext(GlobalContext);
   const [productCount, setProductCount] = useState(1);
   const [productInCart, setProductInCart] = useState(false);
@@ -76,15 +76,15 @@ export default function ProductPreview({ product }: { product: IProduct | null }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productInCart, productCount])
 
-  const averageRate = product?.item?.averageRate || 0;
+  const averageRate = product?.averageRate || 0;
 
   return (
     <div className="flex flex-wrap">
       <div className="basis-full lg:basis-1/2 mb-6">
         <div className="product-img">
           <img
-            src={product?.item?.image || ""}
-            alt={product?.item?.name || ""}
+            src={product?.image || ""}
+            alt={product?.name || ""}
             width={600}
             height={600}
             className="rounded-lg w-full h-full"
@@ -97,7 +97,7 @@ export default function ProductPreview({ product }: { product: IProduct | null }
           <div className="flex items-center justify-between mb-2">
             <h3 className="text-lg text-bgGrayText800 font-medium">
               <Link href={`/product/${product?.id}`}>
-                {product?.item?.name}
+                {product?.name}
               </Link>
             </h3>
             <span
@@ -133,7 +133,7 @@ export default function ProductPreview({ product }: { product: IProduct | null }
           <div className="my-5">
             <div className="">
             <span className="text-base text-bgGrayText500 font-medium">Price:</span> 
-            <span className="mx-2 text-bgGrayText800 text-xl font-medium">{product?.item?.discount || product?.item?.price} JOD</span>
+            <span className="mx-2 text-bgGrayText800 text-xl font-medium">{product?.discount || product?.price} JOD</span>
             </div>
           </div>
           {/* Div With Time Taken */}

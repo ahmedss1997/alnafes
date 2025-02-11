@@ -1,88 +1,120 @@
 "use client";
-
-import {useContext, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addProductInCart, setCartData } from '../../store/slices/cartSlice';
+import {useEffect, useState } from "react";
 import { MdOutlineMinimize } from "react-icons/md";
 import { GoPlus } from "react-icons/go";
-import GlobalContext from "@/code/globalContext";
 import Link from "next/link";
 import NotifySign from "../notifyModel/notify_sign";
-// import Image from "next/image";
 import NotifySuccess from "../notifyModel/notify_success";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
-import { IProduct } from "@/types/types";
+import { IAPIResult, IProductItem } from "@/types/types";
 import { FaStar } from "react-icons/fa";
+import { RootState } from "@/store";
+import { useToggleFavourite } from "@/hooks/useFavourite";
+
 
 const ProductCardCol = ({
   product,
 }: {
-  product: IProduct;
+  product: IProductItem;
 }) => {
-  const { G_productsInCart, setG_ProductsInCart } = useContext(GlobalContext);
-  const defaultImg = product.item.image;
+  const dispatch = useDispatch();
+  const { cartProducts } = useSelector((state: RootState) => state.cart);
+  const { favData } = useSelector((state: RootState) => state.fav);
+  const toggleFavourite = useToggleFavourite();
+  const defaultImg = product.image;
   const [productCount, setProductCount] = useState(1);
   const [productIsFav, setProductFav] = useState(false);
-  const [productInCart, setProductInCart] = useState(false);
+  const [productInCart, setProductInCart] = useState(cartProducts.some(x => x.item.id == product.id));
   const [openNotify, setOpenNotify] = useState(false);
   const [openNotifySuccess, setOpenNotifySuccess] = useState(false);
+  const {currentUser} = useSelector((state: any) => state.auth);
+
+  useEffect(() => {
+    setProductFav(favData.some(x => x.item.id == product.id));
+  }, [favData]);
+
+  const toggleActiveIconHeart = () => {
+    if (!currentUser) return;
+    setProductFav(!productIsFav);
+    {
+      toggleFavourite.mutate({UserId: currentUser.id, ItemId: product.id}, {
+        onSuccess: async (data: IAPIResult<string>) => {
+          if (data.code === 200) {
+            console.log('Favourite successful!', data);
+          }
+        },
+        onError: (error: unknown) => {
+          console.error('Favourite failed:', error);
+        },
+      });
+    }
+  };
+
   const handleIncrement = () => {
+    const isInCart = cartProducts.some(x => x.item.id == product.id);
+    setProductInCart(isInCart);
     if (productCount < product.quantity) {
       setProductCount(productCount + 1);
+      if (isInCart) {
+        addToCart(productCount + 1);
+      }
+    } else if (isInCart) {
+      addToCart(productCount);
     }
   };
 
   const handleDecrement = () => {
+    const isInCart = cartProducts.some(x => x.item.id == product.id);
     const count = productCount - 1;
+    setProductInCart(isInCart);
     if (productCount > 0) {
       setProductCount(count);
       if (count == 0) {
+        dispatch(setCartData(cartProducts.filter(x => x.item.id != product.id)));
         setProductInCart(false);
+      } else if (productInCart) {
+        addToCart(count);
       }
     }
   };
 
-  const toggleActiveIconHeart = () => {
-    setProductFav(!productIsFav);
+  const addToCart = (count: number) => {
+    const productInCartFound = cartProducts.find(x => x.item.id == product.id);
+    if (!productInCartFound) {
+      setProductCount(count || 1);
+      dispatch(addProductInCart({
+        itemId: product.id,
+        item: product,
+        quantity: count || 1
+      }));
+
+      setProductInCart(true);
+
+    } else if (count && productInCartFound) {
+
+      const products = cartProducts.map(x => {
+        if (x.item.id == product.id) {
+          return { ...x, quantity: count };
+        } else {
+          return x;
+        }
+      });
+      dispatch(setCartData(products));
+
+    }
   };
 
   useEffect(() => {
-    if (productInCart && !G_productsInCart.some(x => x.id == product.id)) {
-      setProductCount(productCount || 1);
-      setG_ProductsInCart([...G_productsInCart, {
-        ...product, quantity: productCount,
-        name: "",
-        price: 0,
-        discountPrice: 0,
-        persent: "",
-        currency: "",
-        rate: "",
-        imagesUrl: [],
-        description: "",
-        model: "",
-        stock: 0,
-        categoryId: 0,
-        categoryName: "",
-        rating: 0,
-        matrial: "",
-        color: "",
-        size: "",
-        SKU: "",
-        reviews: [],
-        tags: [],
-        warranty: ""
-      }]);
-    } else if (productInCart && G_productsInCart.some(x => x.id == product.id)) {
-      const index = G_productsInCart.findIndex(x => x.id == product.id);
-      const products = [...G_productsInCart];
-      products[index].quantity = productCount;
-      setG_ProductsInCart(products);
-    } else if (!productInCart && !productCount && G_productsInCart.some(x => x.id == product.id)) {
-      setG_ProductsInCart(G_productsInCart.filter(x => x.id != product.id));
+    if (cartProducts.some(x => x.item.id == product.id)) {
+      setProductCount(cartProducts.find(x => x.item.id == product.id)?.quantity || 0);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [productInCart, productCount])
+  }, [cartProducts]);
 
-  const averageRate = product.item.averageRate || 0;
+  const averageRate = product.averageRate || 0;
 
   return (
     <div className="product-content bg-onSurface border-2 border-solid border-bgGrayText400 rounded-md overflow-hidden ">
@@ -117,10 +149,10 @@ const ProductCardCol = ({
         </div>
       </div>
       <div className="caption-product-home bg-bgGrayText50 p-5">
-        <p className="text-sm text-bgGrayText400 font-semibold mb-2"> {product.item.subCategory === null ? "Falafel" : product.item.subCategory} </p>
+        <p className="text-sm text-bgGrayText400 font-semibold mb-2"> {product.subCategory === null ? "Falafel" : product.subCategory.name} </p>
         <h3 className="text-base lg:text-lg text-bgGrayText800 font-medium">
           <Link href={`/product/${product.id}`}>
-            {product.item.name}
+            {product.name}
           </Link>
         </h3>
         {/* Star Rating Section */}
@@ -142,12 +174,12 @@ const ProductCardCol = ({
         {/* Div With Price */}
         <div className="my-2">
           <span className="text-base text-redColor font-medium">
-            {product.item.discount || product.item.price} JOD
+            {product.discount || product.price} JOD
           </span>
           {
-            product.item.discount ? (
+            product.discount ? (
               <span className="text-base text-[#39545D] font-medium lg:mx-3 ml-1 line-through">
-                {product.item.price} JOD
+                {product.price} JOD
               </span>
             ) : null
           }
@@ -201,15 +233,21 @@ const ProductCardCol = ({
               <div className="w-full flex justify-between items-center gap-3">
                 <Link className="text-onSurface flex justify-center items-center lg:text-base text-sm font-semibold w-[80px] lg:max-w-[200px] lg:w-full h-full rounded-lg border border-solid border-primary bg-primary cursor-pointer" href={"/cart"}>
                   <button
-                    onClick={() => setProductInCart(true)}
+                    onClick={() => addToCart(productCount)}
                     >
                       Buy Now
                   </button>
                 </Link>
                 <span
                   className="w-8 h-8 lg:h-11 lg:w-11 rounded-full border border-[#39545D] bg-OnSurface flex justify-center items-center cursor-pointer"
+                  role="button"
+                  onClick={() => addToCart(productCount)}
                 >
-                  <AiOutlineShoppingCart className="lg:text-primary text-graySubText text-xl cursor-pointer" />
+                  {productInCart ? (
+                    <AiOutlineShoppingCart  className="lg:text-primary text-graySubText text-xl cursor-pointer"  />
+                  ) : (
+                    <AiOutlineShoppingCart className="lg:text-primary text-graySubText text-xl cursor-pointer" />
+                  )}
                 </span>
               </div>
             )}

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import imgLogo from "../../public/assets/logo.jpg";
 import avatar from "../../public/assets/avatart.png";
 import {
@@ -10,9 +9,7 @@ import {
   IoClose,
 } from "react-icons/io5";
 import Link from "next/link";
-import {useContext, useState, useEffect } from "react";
-import CartMenu from "./cartMenu/cartMenu";
-import GlobalContext from "../code/globalContext";
+import { useState, useEffect } from "react";
 import i18next from '../i18n';
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { MdPhone } from "react-icons/md";
@@ -22,11 +19,13 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { setAuthData } from '../store/slices/authSlice';
 import { useDispatch } from 'react-redux';
+import dynamic from "next/dynamic";
+
+const CartMenu = dynamic(() => import("./cartMenu/cartMenu"), { ssr: false });
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const [cartMenuIsOpen, setCartMenuIsOpen] = useState(false);
-  const { G_productsInCart } = useContext(GlobalContext);
   const [language, setLanguage] = useState('en');
   const [showDropdown, setShowDropdown] = useState(false);
   const [showProfileMenue, setShowProfileMenue] = useState(false);
@@ -34,6 +33,8 @@ const Navbar = () => {
   const [isSubmenuOpen, setSubmenuOpen] = useState(false);
 
   const { currentUser } = useSelector((state: RootState) => state.auth);
+  const cartProducts = useSelector((state: RootState) => state.cart.cartProducts);
+
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
   };
@@ -81,7 +82,7 @@ const Navbar = () => {
   ];
 
   return (
-    <div className=" bg-bgGrayText50 realative w-full z-[1000]">
+    <div className=" bg-bgGrayText50 sticky top-0 w-full z-[1000]">
       <div className="border-b-[1px] border-bgGrayText400">
         <div className="container mx-auto px-4 py-2 sm:px-6 lg:px-8 flex gap-3 items-center">
           <div className="flex items-center justify-between w-full">
@@ -93,13 +94,12 @@ const Navbar = () => {
                     className="text-2xl text-graySubText mx-2 block lg:hidden cursor-pointer"
                     onClick={toggleSidebar}
                   />
-                  <Image
-                    src={imgLogo}
+                  <img
+                    src={imgLogo.src}
                     className=""
                     width={45}
                     height={45}
                     alt="logo"
-                    priority
                   />
                   <h4 className="text-primary font-bold mx-2">
                     Ibn Al-Nafis
@@ -153,19 +153,18 @@ const Navbar = () => {
         {/* Logo Nav */}
         <div className="col-item hidden lg:flex items-center gap-4 lg:max-w-[25%] lg:basis-1/4 max-w-full basis-full ">
           <div className="content">
-            <div className="logo-footer flex items-center">
-              <Image
-                src={imgLogo}
+            <Link href={'/'} className="logo-footer flex items-center">
+              <img
+                src={imgLogo.src}
                 className=""
                 width={45}
                 height={45}
                 alt="logo"
-                priority
               />
               <h4 className="text-primary font-bold mx-2">
                 Ibn Al-Nafis
               </h4>
-            </div>
+            </Link>
           </div>
         </div>
         {/* list Nav */}
@@ -202,9 +201,9 @@ const Navbar = () => {
               onClick={toggleDropdownProfile}
             >
               <div className="w-14 h-14 rounded-full border border-bgGrayText300">
-                <Image 
+                <img 
                   className="w-full h-full"
-                  src={currentUser?.image || avatar}
+                  src={currentUser?.image || avatar.src}
                   alt="avatar"
                 />
               </div>
@@ -238,7 +237,7 @@ const Navbar = () => {
           <div className="relative">
             <button className="flex items-center w-12 h-12 rounded-full  border border-bgGrayText300"
               onClick={() =>  setCartMenuIsOpen(!cartMenuIsOpen)}>
-              <span className="bg-primary text-xs h-5 w-5 leading-5 text-center text-white rounded-full absolute top-[35px] right-0"> {G_productsInCart.length} </span>
+              <span className="bg-primary text-xs h-5 w-5 leading-5 text-center text-white rounded-full absolute top-[35px] right-0"> {cartProducts.length} </span>
               <AiOutlineShoppingCart className="lg:text-primary text-graySubText text-xl grow cursor-pointer" />
             </button>
             {
@@ -254,7 +253,7 @@ const Navbar = () => {
         } transition-transform duration-300 ease-in-out z-50`}
       >
         <div className="flex justify-between items-center p-4 ">
-          <Image src={imgLogo} width={50} height={50} alt="logo" priority />
+          <img src={imgLogo.src} width={50} height={50} alt="logo" />
           <IoClose
             className="text-2xl text-primary cursor-pointer"
             onClick={toggleSidebar}
