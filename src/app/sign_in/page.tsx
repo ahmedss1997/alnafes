@@ -21,10 +21,12 @@ const SignInPage = () => {
   const handleSubmitLogin = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     loginMutation.mutate(credentialsLogin, {
-      onSuccess: (data: IAPIResult<ICurrentUser>) => {
+      onSuccess: async (data: IAPIResult<ICurrentUser>) => {
         if (data.code === 200) {
           dispatch(setAuthData(data.result));
           localStorage.setItem('accessToken', data.result.token);
+          localStorage.setItem('currentUser', JSON.stringify(data.result));
+          console.log('Login successful!', data);
           router.push('/');
         }
       },

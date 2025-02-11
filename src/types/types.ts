@@ -206,6 +206,17 @@ export interface User {
   isActive: boolean
 }
 
+export interface Address {
+  lat: string
+  long: string
+  city: string
+  street: string
+  buildingNumber: string
+  id: number
+  createdDate: string
+  isActive: boolean
+}
+
 export interface iReviewFilterRequest {
   Name?: string,
   Section?: number,
@@ -223,6 +234,55 @@ export interface IReviewRequest {
   itemId: number
   rateNumber: number
   comment: string
+}
+
+// #endregion
+
+// #region Orders
+
+export interface IOrder {
+  orderNumber: number
+  addressId: number
+  address: Address
+  userId: number
+  user: User
+  paymentMethod: number
+  orderStatus: number
+  totalPrice: number
+  itemOrders: [
+    {
+      itemId: number
+      item: IProductItem
+      quantity: number
+      id: number
+      createdDate: string
+      isActive: boolean
+    }
+  ]
+  id: number
+  createdDate: string
+  isActive: boolean
+}
+
+export interface iOrderFilterRequest {
+  OrderNumber?: number,
+  AddressId?: number,
+  City?: string,
+  Street?: string,
+  BuildingNumber?: number,
+  UserId?: number,
+  PhoneNumber?: string,
+  FirstName?: string
+  LastName?: string
+  PaymentMethod?: string
+  OrderStatus?: string
+  TotalPrice?: number
+  MaxPageSize?: number
+  PageSize?: number,
+  PageNumber?: number,
+  Id?: number,
+  Search?: string,
+  Sort?: string
 }
 
 // #endregion

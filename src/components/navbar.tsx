@@ -3,7 +3,6 @@
 import Image from "next/image";
 import imgLogo from "../../public/assets/logo.jpg";
 import avatar from "../../public/assets/avatart.png";
-// import imgAdrees from "../../public/assets/Jordan.png";
 import {
   IoChevronDown,
   IoChevronDownOutline,
@@ -15,15 +14,17 @@ import {useContext, useState, useEffect } from "react";
 import CartMenu from "./cartMenu/cartMenu";
 import GlobalContext from "../code/globalContext";
 import i18next from '../i18n';
-// import { useTranslation } from 'react-i18next';
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { MdPhone } from "react-icons/md";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { LuMenu } from "react-icons/lu";
 import { useSelector } from 'react-redux';
 import { RootState } from '../store';
+import { setAuthData } from '../store/slices/authSlice';
+import { useDispatch } from 'react-redux';
 
 const Navbar = () => {
+  const dispatch = useDispatch();
   const [cartMenuIsOpen, setCartMenuIsOpen] = useState(false);
   const { G_productsInCart } = useContext(GlobalContext);
   const [language, setLanguage] = useState('en');
@@ -31,7 +32,6 @@ const Navbar = () => {
   const [showProfileMenue, setShowProfileMenue] = useState(false);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [isSubmenuOpen, setSubmenuOpen] = useState(false);
-  // const { t } = useTranslation();
 
   const { currentUser } = useSelector((state: RootState) => state.auth);
   const toggleSidebar = () => {
@@ -45,6 +45,13 @@ const Navbar = () => {
     setShowProfileMenue(!showProfileMenue);
   };
 
+  useEffect(() => {
+    const user = localStorage.getItem('currentUser');
+    if (user) {
+      dispatch(setAuthData(JSON.parse(user)));
+    }
+  }, []);
+  
   useEffect(() => {
     document.documentElement.lang = language;
     document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
@@ -60,16 +67,6 @@ const Navbar = () => {
     i18next.changeLanguage(lang);
     setShowDropdown(false);
   };
-
-  // const listItems = [
-  //   { title: "Brand", path: "#" },
-  //   { title: "Mobile & Tablets", path: "#" },
-  //   { title: "Computer & Laptop", path: "#" },
-  //   { title: "Headphones & Sounds", path: "#" },
-  //   { title: "Camera", path: "#" },
-  //   { title: "Smart Home", path: "#" },
-  //   { title: "Entertainment", path: "#" },
-  // ];
 
   const itemsNav = [
     {
@@ -183,9 +180,9 @@ const Navbar = () => {
               </li>
             ))}
             <Link className="cursor-pointer" href={'#'}>
-                <li className="py-2 px-2 xl:px-4 text-sm xl:text-base text-primary font-medium">
-                  Recipe
-                </li>
+              <li className="py-2 px-2 xl:px-4 text-sm xl:text-base text-primary font-medium">
+                Recipe
+              </li>
             </Link>
           </ul>
         </div>
@@ -220,11 +217,13 @@ const Navbar = () => {
               <div>
                 {showProfileMenue && (
                   <ul className="absolute top-[50px] right-[215px] z-50 w-40 bg-white border rounded-md shadow-lg">
-                    <li
-                      className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
-                    >
-                      Profile
-                    </li>
+                    <Link className="cursor-pointer" href={'/profile'}>
+                      <li
+                        className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
+                      >
+                        Profile
+                      </li>
+                    </Link>
                     <li
                       className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
                     >
@@ -317,3 +316,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

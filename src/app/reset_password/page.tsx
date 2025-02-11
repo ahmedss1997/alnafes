@@ -31,7 +31,6 @@ const VerifyCodeResetPassword = () => {
     GenerateCode.mutate({email: email || ''}, {
       onSuccess: (data: IAPIResult<ICurrentUser>) => {
         if (data.code === 200) {
-          // dispatch(setAuthData(data.result));
           console.log('Login successful!', data);
         }
       },

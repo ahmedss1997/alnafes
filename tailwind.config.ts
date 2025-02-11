@@ -41,6 +41,7 @@ export default {
         'borderGrayColor': '#E4E7E9',
         'redColor': '#DB4444',
         'redColor600': '#DC2626',
+        'greenColor600': '#16A34A',
         'success': '#62BA7B'
       },
     },

@@ -1,8 +1,6 @@
-// src/lib/productApi.ts
 import { get } from "@/api/serverSide";
 import { iProductFilterRequest } from "@/types/types";
 
-// Server-side method for fetching filtered products
 export const fetchProductsFilter = async (params: iProductFilterRequest) => {
   try {
     const data = await get("api/ItemOrder/Filter", false, params);
