@@ -4,6 +4,7 @@
 import Recipe1 from "../../../public/assets/Recipe1.png";
 import { useRecipeFilter } from "@/hooks/useRecipe";
 import { IRecipe } from "@/types/types";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const Recipes = () => {
@@ -53,7 +54,11 @@ const Recipes = () => {
           </div>
         ))}
       </div>
-      <button className="text-blackColor font-semibold mx-auto">See All</button>
+      <Link href="/all_recipes" className="font-medium text-lg text-primary border border-primary rounded-md px-3 py-1">
+        <button>
+          See all
+        </button>
+      </Link>
     </div>
   );
 };

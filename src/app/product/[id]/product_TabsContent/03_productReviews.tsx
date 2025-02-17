@@ -32,7 +32,7 @@ export default function ProductPreview({ product }: { product: IProduct }) {
           setReviewsList(data.result);
         },
         onError: (error) => {
-          console.error("Recipes failed:", error);
+          console.error("Revews failed:", error);
         },
       }
     );

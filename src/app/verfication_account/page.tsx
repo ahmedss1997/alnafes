@@ -42,7 +42,7 @@ const VerficationAccount = () => {
           </div>
           <div className="col-item lg:max-w-[50%] lg:basis-1/2 max-w-full basis-full p-3">
             <div className=" bg-borderLine rounded-2xl p-9">
-              <h1 className="text-2xl font-normal text-onSurface my-3 text-center">Log in</h1>
+              <h1 className="text-2xl font-normal text-onSurface my-3 text-center">Enter Verfication Code</h1>
               <form onSubmit={handleSubmitVerfication}>
                 <div className="mb-4">
                   <label className="block text-bgGrayText50 font-medium mb-2">
@@ -66,7 +66,7 @@ const VerficationAccount = () => {
                     id="name"
                     type="text"
                     className="w-full p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-300"
-                    placeholder="Enter your first name"
+                    placeholder="Enter your verfication code"
                     value={credentialsVerfication.Code}
                     onChange={(e) => setCredentialsVerfication({ ...credentialsVerfication, Code: e.target.value })}
                     required

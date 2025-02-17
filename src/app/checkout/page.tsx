@@ -12,6 +12,8 @@ const Chekout = () => {
   const deliveryCost = 50;
   const finalTotal = totalWithDiscount + deliveryCost;
 
+  
+
   return (
     <div className="container mx-auto px-4 py-10 sm:px-6 lg:px-8 ">
       <span className="text-lg text-bgGrayText400 font-medium p-3">Delivery</span>

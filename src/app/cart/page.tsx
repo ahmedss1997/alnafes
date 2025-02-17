@@ -46,8 +46,7 @@ export default function Cart() {
       {
         getFav();
       }
-    }, [currentUser]);
-        
+  }, [currentUser]);
 
   const toggleFav = (id: number, isFav: boolean) => {
     if (!currentUser) return;
@@ -84,7 +83,6 @@ export default function Cart() {
 
   return (
     <div className="container mx-auto px-4 py-10 sm:px-6 lg:px-8 ">
-      {/* <h2 className="text-2xl text-blackText font-bold mb-6 text-center">Cart</h2> */}
       <span className="text-lg text-bgGrayText400 font-medium p-3"> My cart ({cartProducts.length} items)</span>
       <div className="row-all w-full flex flex-wrap gap-3"> 
         <div className="col-item lg:max-w-[66%] lg:basis-2/3 max-w-full basis-full p-3">
@@ -133,7 +131,7 @@ export default function Cart() {
         </div>
         <div className="col-item lg:max-w-[33%] lg:basis-1/3 max-w-full basis-full p-3">
           {cartProducts && cartProducts.length > 0 && (
-            <div className="border border-solid border-borderGray200 rounded-md lg:my-12 my-5 p-7">
+            <div className="border border-solid border-borderGray200 rounded-md lg:my-8 my-5 p-7">
               <div className="flex flex-wrap lg:justify-between justify-center mt-3">
                 <span className="text-captionColor">Total</span>
                 <span className="font-semibold text-xl text-bgGrayText600">{totalWithDiscount.toFixed(3)} JOD <span className="font-semibold text-xs text-bgGrayText400 relative bottom-3 line-through"> {total.toFixed(3)} JOD</span> 

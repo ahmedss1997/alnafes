@@ -13,6 +13,7 @@ import { IAPIResult, IProductItem } from "@/types/types";
 import { FaStar } from "react-icons/fa";
 import { RootState } from "@/store";
 import { useToggleFavourite } from "@/hooks/useFavourite";
+import { setFavData } from "@/store/slices/favouriteSlice";
 
 
 const ProductCardCol = ({
@@ -32,11 +33,15 @@ const ProductCardCol = ({
   const [openNotifySuccess, setOpenNotifySuccess] = useState(false);
   const {currentUser} = useSelector((state: any) => state.auth);
 
+  // Determine if the product is favorited
+  const isFavorited = favData.some((fav) => fav.item.id === product.id);
+  const updatedProduct = { ...product, isFavorite: isFavorited };
+
   useEffect(() => {
     setProductFav(favData.some(x => x.item.id == product.id));
   }, [favData]);
 
-  const toggleActiveIconHeart = () => {
+  const toggleActiveIconHeart = (id: number, isFav: boolean) => {
     if (!currentUser) return;
     setProductFav(!productIsFav);
     {
@@ -44,6 +49,10 @@ const ProductCardCol = ({
         onSuccess: async (data: IAPIResult<string>) => {
           if (data.code === 200) {
             console.log('Favourite successful!', data);
+            const updatedFavData = isFav
+            ? favData.filter((fav) => fav.item.id !== id) // Remove from favorites
+            : [...favData, { item: product, userId: currentUser.id, isFavorite: true }]; // Add to favorites
+            dispatch(setFavData(updatedFavData));
           }
         },
         onError: (error: unknown) => {
@@ -138,7 +147,7 @@ const ProductCardCol = ({
             className={`h-11 w-11 rounded-full border border-[#39545D] bg-onSurface flex justify-center items-center cursor-pointer ${
               product.quantity == 0 ? "hidden" : "block"
             }`}
-            onClick={() => toggleActiveIconHeart()}
+            onClick={() => toggleActiveIconHeart(updatedProduct.id, updatedProduct.isFavorite)}
           >
             {productIsFav ? (
               <BsHeartFill className="text-xl text-redColor"/>
@@ -235,7 +244,7 @@ const ProductCardCol = ({
                   <button
                     onClick={() => addToCart(productCount)}
                     >
-                      Buy Now
+                    Buy Now
                   </button>
                 </Link>
                 <span

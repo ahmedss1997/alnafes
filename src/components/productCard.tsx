@@ -6,7 +6,7 @@ import { MdOutlineMinimize } from "react-icons/md";
 import { GoPlus } from "react-icons/go";
 import { IProductItem } from "@/types/types";
 import { RootState } from "@/store";
-import { BiShoppingBag } from "react-icons/bi";
+import { AiOutlineShoppingCart } from "react-icons/ai";
 const ProductCard = ({
   product,
   withCart,
@@ -85,12 +85,12 @@ const ProductCard = ({
 
 
   return (
-    <div className={`shadow-sm rounded-lg mb-4 border my-12 bg-white`}>
-      <div className="flex items-start flex-wrap">
-        <div className="border basis-full lg:basis-1/4 max-w-[160px] mx-auto lg:mx-0">
+    <div className={`shadow-sm rounded-lg mb-4 border my-8 bg-white`}>
+      <div className="flex h-full items-start flex-wrap max-h-[150px]">
+        <div className="h-[150px] basis-full lg:basis-1/4 max-w-[160px] mx-auto lg:mx-0">
           <img
-            src={defaultImg} className="h-full" alt="product"
-            width={200} height={200}/>
+            src={defaultImg} className="h-full ltr:rounded-l-lg rtl:rounded-r-lg" alt="product"
+          />
         </div>
         <div className="text-sm basis-full lg:basis-3/4 ltr:lg:ml-4 rtl:lg:mr-4 mx-0">
           <div className="flex items-center justify-between mb-2 flex-wrap">
@@ -99,11 +99,17 @@ const ProductCard = ({
             <div className="mt-3 flex justify-center lg:justify-end text-sm font-medium">
               {
                 withCart && (
-                  <button className="text-secondary mx-1 flex items-center" onClick={() => addToCart(productCount)}>
-                    {" "}
-                    <BiShoppingBag className="mx-1 text-lg" />{" "}
-                    <span> Add to cart </span>{" "}
-                  </button>
+                  <span
+                    className="w-8 h-8 lg:h-11 lg:w-11 rounded-full border border-[#39545D] bg-OnSurface flex justify-center items-center cursor-pointer"
+                    role="button"
+                    onClick={() => addToCart(productCount)}
+                  >
+                    {productInCart ? (
+                      <AiOutlineShoppingCart  className="lg:text-primary text-graySubText text-xl cursor-pointer"  />
+                    ) : (
+                      <AiOutlineShoppingCart className="lg:text-primary text-graySubText text-xl cursor-pointer" />
+                    )}
+                  </span>
                 )
               }
               

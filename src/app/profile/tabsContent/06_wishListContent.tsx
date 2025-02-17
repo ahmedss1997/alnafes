@@ -58,11 +58,13 @@ export default function WishListContent() {
       {productsList && productsList.length ? (
         productsList.map((product, index) => (
           <ProductCard key={index + 1} product={product} withCart>
-            <div className="mt-3 flex justify-center lg:justify-end text-sm font-medium">
-              <button className="text-redColor mx-1 flex items-center" onClick={() => toggleFav(product.id)}>
-                {" "}
-                <BiSolidTrash className="mx-1 text-lg" /> <span> Remove </span>{" "}
-              </button>
+            <div className="flex items-center justify-center lg:justify-end text-sm font-medium">
+            <span
+              className={`h-8 w-8 lg:h-11 lg:w-11 mx-2 rounded-full border border-borderLineGray bg-onSurface flex justify-center items-center cursor-pointer`}
+              onClick={() => toggleFav(product.id)}
+            >
+              <BiSolidTrash className="mx-1 text-lg" />
+            </span>
             </div>
           </ProductCard>
         ))

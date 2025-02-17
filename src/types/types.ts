@@ -285,6 +285,28 @@ export interface iOrderFilterRequest {
   Sort?: string
 }
 
+export interface IAddOrderRequest {
+  address: Address
+  userId: number
+  paymentMethod: number
+  totalPrice: number
+  itemOrders: ItemOrder[]
+}
+
+export interface Address {
+  id: number
+  lat: string
+  long: string
+  city: string
+  street: string
+  buildingNumber: string
+}
+
+export interface ItemOrder {
+  itemId: number
+  quantity: number
+}
+
 // #endregion
 
 // #region Favourite
@@ -310,6 +332,29 @@ export interface IFavourite {
   id: number
   createdDate: string
   isActive: boolean
+}
+
+// #endregion
+
+// #region User
+
+
+export interface IUserUpdateRequest {
+  FirstName?: string,
+  LastName?: string,
+  Image?: string,
+  PhoneNumber?: number,
+  Id?: number,
+}
+
+export interface IAddress {
+  id: number;
+  type?: "Home" | "Work" | "Other";
+  name: string;
+  country: string;
+  city: string;
+  street: string;
+  buildingNumber: string;
 }
 
 // #endregion

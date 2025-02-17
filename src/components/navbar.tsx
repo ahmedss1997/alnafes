@@ -82,7 +82,7 @@ const Navbar = () => {
   ];
 
   return (
-    <div className=" bg-bgGrayText50 sticky top-0 w-full z-[1000]">
+    <div className=" bg-bgGrayText50 top-0 w-full z-[1000]">
       <div className="border-b-[1px] border-bgGrayText400">
         <div className="container mx-auto px-4 py-2 sm:px-6 lg:px-8 flex gap-3 items-center">
           <div className="flex items-center justify-between w-full">

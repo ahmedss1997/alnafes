@@ -1,80 +1,150 @@
 "use client";
 
-// import { IProduct } from "@/code/dataModels";
-import { useContext, useEffect, useState } from "react";
-// import Image from "next/image";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import GlobalContext from "@/code/globalContext";
+// import GlobalContext from "@/code/globalContext";
 import { MdOutlineMinimize } from "react-icons/md";
 import { GoPlus } from "react-icons/go";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-// import Stars from "../../../../public/assets/stars.png";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 import { IProductItem } from "@/types/types";
 import { FaStar } from "react-icons/fa";
-// import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store";
+import { addProductInCart, setCartData } from "@/store/slices/cartSlice";
+import { IAPIResult, IFavourite } from "@/types/types";
+import { useFavouriteFilter, useToggleFavourite } from "@/hooks/useFavourite";
+import { setFavData } from "@/store/slices/favouriteSlice";
 
-export default function ProductPreview({ product }: { product: IProductItem | null }) {
-  const { G_productsInCart, setG_ProductsInCart } = useContext(GlobalContext);
+export default function ProductPreview({ product }: { product: IProductItem }) {
+  // const { G_productsInCart, setG_ProductsInCart } = useContext(GlobalContext);
+  const dispatch = useDispatch();
+  const cartProducts = useSelector((state: RootState) => state.cart.cartProducts);
+  const {currentUser} = useSelector((state: any) => state.auth);
+  const toggleFavourite = useToggleFavourite();
+  const FavouriteFilter = useFavouriteFilter();
   const [productCount, setProductCount] = useState(1);
-  const [productInCart, setProductInCart] = useState(false);
+  const [productInCart, setProductInCart] = useState(cartProducts.some(x => x.item.id == product.id));
+  const { favData } = useSelector((state: RootState) => state.fav);
   const [productIsFav, setProductFav] = useState(false);
 
+  // Determine if the product is favorited
+  const isFavorited = favData.some((fav) => fav.item.id === product.id);
+  const updatedProduct = { ...product, isFavorite: isFavorited };
+
+  const getFav = () => FavouriteFilter.mutate({UserId: currentUser.id}, {
+    onSuccess: async (data: IAPIResult<IFavourite[]>) => {
+      console.log("getvaf");
+      if (data.code === 200) {
+        console.log("afterrr get fav");
+        const favProducts = data.result.filter((favProduct) => favProduct.isFavorite && favProduct.userId === currentUser.id);
+        dispatch(setFavData(favProducts));
+        const products = cartProducts.map((cartProduct) => {
+          const favProduct = favProducts.find((fav) => fav.item.id === cartProduct.item.id);
+          return { ...cartProduct, item: { ...cartProduct.item, isFavorite: !!favProduct} };
+        });
+        dispatch(setCartData(products));
+      }
+    },
+    onError: (error: unknown) => {
+      console.error('Favourite failed:', error);
+    },
+  });
+
+  useEffect(() => {
+      // get favourite list on load and when user is logged in
+      if (currentUser)
+      {
+        getFav();
+      }
+  }, [currentUser]);
+
+  useEffect(() => {
+    setProductFav(favData.some(x => x.item.id == product.id));
+  }, [favData]);
+
+  const toggleActiveIconHeart = (id: number, isFav: boolean) => {
+    if (!currentUser) return;
+    setProductFav(!productIsFav);
+    {
+      toggleFavourite.mutate({UserId: currentUser.id, ItemId: product.id}, {
+        onSuccess: async (data: IAPIResult<string>) => {
+          if (data.code === 200) {
+            console.log('Favourite successful!', data);
+            const updatedFavData = isFav
+            ? favData.filter((fav) => fav.item.id !== id) // Remove from favorites
+            : [...favData, { item: product, userId: currentUser.id, isFavorite: true }]; // Add to favorites
+            dispatch(setFavData(updatedFavData));
+          }
+        },
+        onError: (error: unknown) => {
+          console.error('Favourite failed:', error);
+        },
+      });
+    }
+  };
+
   const handleIncrement = () => {
-    if (productCount < (product?.quantity || 0)) {
+    const isInCart = cartProducts.some(x => x.item.id == product.id);
+    setProductInCart(isInCart);
+    if (productCount < product.quantity) {
       setProductCount(productCount + 1);
+      if (isInCart) {
+        addToCart(productCount + 1);
+      }
+    } else if (isInCart) {
+      addToCart(productCount);
     }
   };
 
   const handleDecrement = () => {
+    const isInCart = cartProducts.some(x => x.item.id == product.id);
     const count = productCount - 1;
+    setProductInCart(isInCart);
     if (productCount > 0) {
       setProductCount(count);
       if (count == 0) {
+        dispatch(setCartData(cartProducts.filter(x => x.item.id != product.id)));
         setProductInCart(false);
+      } else if (productInCart) {
+        addToCart(count);
       }
     }
   };
 
-  const toggleActiveIconHeart = () => {
-    setProductFav(!productIsFav);
+  const addToCart = (count: number) => {
+    const productInCartFound = cartProducts.find(x => x.item.id == product.id);
+    if (!productInCartFound) {
+      setProductCount(count || 1);
+      dispatch(addProductInCart({
+        itemId: product.id,
+        item: product,
+        quantity: count || 1
+      }));
+
+      setProductInCart(true);
+
+    } else if (count && productInCartFound) {
+
+      const products = cartProducts.map(x => {
+        if (x.item.id == product.id) {
+          return { ...x, quantity: count };
+        } else {
+          return x;
+        }
+      });
+      dispatch(setCartData(products));
+
+    }
   };
+
   useEffect(() => {
-    if (productInCart && product && !G_productsInCart.some(x => x.id == product.id)) {
-      setProductCount(productCount || 1);
-      setG_ProductsInCart([...G_productsInCart, {
-        ...product, quantity: productCount,
-        name: "",
-        price: 0,
-        discountPrice: 0,
-        persent: "",
-        currency: "",
-        rate: "",
-        imagesUrl: [],
-        description: "",
-        model: "",
-        stock: 0,
-        categoryId: 0,
-        categoryName: "",
-        rating: 0,
-        matrial: "",
-        color: "",
-        size: "",
-        SKU: "",
-        reviews: [],
-        tags: [],
-        warranty: ""
-      }]);
-    } else if (productInCart && product && G_productsInCart.some(x => x.id == product.id)) {
-      const index = G_productsInCart.findIndex(x => x.id == product.id);
-      const products = [...G_productsInCart];
-      products[index].quantity = productCount;
-      setG_ProductsInCart(products);
-    } else if (!productInCart && product && !productCount && G_productsInCart.some(x => x.id == product.id)) {
-      setG_ProductsInCart(G_productsInCart.filter(x => x.id != product.id));
+    if (cartProducts.some(x => x.item.id == product.id)) {
+      setProductCount(cartProducts.find(x => x.item.id == product.id)?.quantity || 0);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [productInCart, productCount])
+  }, [cartProducts]);
+
 
   const averageRate = product?.averageRate || 0;
 
@@ -101,10 +171,8 @@ export default function ProductPreview({ product }: { product: IProductItem | nu
               </Link>
             </h3>
             <span
-              className={`h-11 w-11 rounded-full border border-[#39545D] bg-onSurface flex justify-center items-center cursor-pointer ${
-                product?.quantity == 0 ? "hidden" : "block"
-              }`}
-              onClick={() => toggleActiveIconHeart()}
+              className={`h-9 w-9 mx-2 rounded-full border border-borderLineGray bg-onSurface flex justify-center items-center cursor-pointer`}
+              onClick={() => toggleActiveIconHeart(updatedProduct.id, updatedProduct.isFavorite)}
             >
               {productIsFav ? (
                 <BsHeartFill className="text-xl text-redColor"/>
@@ -172,19 +240,24 @@ export default function ProductPreview({ product }: { product: IProductItem | nu
           <div className="add-cart flex items-center gap-2 relative mt-8">
             <div className="w-full flex justify-between lg:h-11 h-9">
               {/* Button With Buy Now */}
-              {!productInCart && (product?.quantity || 0) > 0 && (
+              {(product?.quantity || 0) > 0 && (
                 <div className="w-full flex justify-between items-center gap-4">
                   <Link className="text-onSurface  flex justify-center items-center lg:text-base text-sm font-semibold w-full h-full rounded-lg border border-solid border-primary bg-primary cursor-pointer" href={"/cart"}>
                     <button
-                      onClick={() => setProductInCart(true)}
                       >
-                        Buy Now
+                      Buy Now
                     </button>
                   </Link>
                   <span
-                    className="h-10 w-10 rounded-full border border-[#39545D] bg-OnSurface flex justify-center items-center cursor-pointer"
+                    className="w-8 h-8 lg:h-11 lg:w-11 rounded-full border border-[#39545D] bg-OnSurface flex justify-center items-center cursor-pointer"
+                    role="button"
+                    onClick={() => addToCart(productCount)}
                   >
-                    <AiOutlineShoppingCart className="lg:text-primary text-graySubText text-xl cursor-pointer" />
+                    {productInCart ? (
+                      <AiOutlineShoppingCart  className="lg:text-primary text-graySubText text-xl cursor-pointer"  />
+                    ) : (
+                      <AiOutlineShoppingCart className="lg:text-primary text-graySubText text-xl cursor-pointer" />
+                    )}
                   </span>
                 </div>
               )}
