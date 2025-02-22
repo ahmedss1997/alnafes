@@ -3,20 +3,22 @@ import Image from "next/image";
 import About1 from "../../../public/assets/RectangleAbout1.png"
 import About2 from "../../../public/assets/RectangleAbout2.png"
 import About3 from "../../../public/assets/RectangleAbout3.png"
+import { useTranslation } from "react-i18next";
 
 const About = () => {
+  const { t } = useTranslation();
   return (
     <div className="container mx-auto px-4 py-5 sm:px-6 lg:px-8">
       <div className="row-all w-full flex flex-wrap">
         <div className="col-item p-3 lg:max-w-[40%] lg:basis-2/5 max-w-[100%] basis-full">
           <div className="w-full h-full flex items-center">
             <div className="max-w-[500px] lg:max-h-[425px] p-3">
-              <h3 className="text-5xl text-primary">About us</h3>
+              <h3 className="text-5xl text-primary">{t("about-us.title")}</h3>
               <p className="text-lg text-graySubText leading-7 my-3">
-                Welcome to Ibn Al-Nafis! We are a family-owned bakery, baking delicious treats with love for generations. We use fresh, local ingredients to create mouthwatering pastries, breakfasts, and desserts. Come join us for a taste of tradition and share the joy of baking!
+                {t("about-us.description1")}
               </p>
               <p className="text-lg text-graySubText leading-7 mt-5">
-                At Ibn Al-Nafis, the aroma of freshly baked goodness welcomes you like a hug. We are a family-owned bakery, passing down delicious recipes for generations. We use only the finest ingredients to create mouthwatering pastries, breakfasts, and desserts. Come savor a taste of tradition and share the joy of baking with us!
+                {t("about-us.description2")}
               </p>
             </div>
           </div>

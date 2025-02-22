@@ -32,6 +32,7 @@ const ProductCardCol = ({
   const [openNotify, setOpenNotify] = useState(false);
   const [openNotifySuccess, setOpenNotifySuccess] = useState(false);
   const {currentUser} = useSelector((state: any) => state.auth);
+  const language = useSelector((state: RootState) => state.language.language);
 
   // Determine if the product is favorited
   const isFavorited = favData.some((fav) => fav.item.id === product.id);
@@ -158,10 +159,18 @@ const ProductCardCol = ({
         </div>
       </div>
       <div className="caption-product-home bg-bgGrayText50 p-5">
-        <p className="text-sm text-bgGrayText400 font-semibold mb-2"> {product.subCategory === null ? "Falafel" : product.subCategory.name} </p>
+        <p className="text-sm text-bgGrayText400 font-semibold mb-2"> 
+          {
+            product.subCategory === null 
+              ? "Falafel" 
+              : language === 'en' 
+                ? product.subCategory.name 
+                : product.subCategory.ar_Name
+          } 
+        </p>
         <h3 className="text-base lg:text-lg text-bgGrayText800 font-medium">
           <Link href={`/product/${product.id}`}>
-            {product.name}
+            {language === 'en' ? product.name : product.ar_Name}  
           </Link>
         </h3>
         {/* Star Rating Section */}

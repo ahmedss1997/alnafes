@@ -20,13 +20,14 @@ import { RootState } from '../store';
 import { setAuthData } from '../store/slices/authSlice';
 import { useDispatch } from 'react-redux';
 import dynamic from "next/dynamic";
+import { setLanguage } from "@/store/slices/languageSlice";
 
 const CartMenu = dynamic(() => import("./cartMenu/cartMenu"), { ssr: false });
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const [cartMenuIsOpen, setCartMenuIsOpen] = useState(false);
-  const [language, setLanguage] = useState('en');
+  // const [language, setLanguage] = useState('en');
   const [showDropdown, setShowDropdown] = useState(false);
   const [showProfileMenue, setShowProfileMenue] = useState(false);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -34,6 +35,7 @@ const Navbar = () => {
 
   const { currentUser } = useSelector((state: RootState) => state.auth);
   const cartProducts = useSelector((state: RootState) => state.cart.cartProducts);
+  const language = useSelector((state: RootState) => state.language.language);
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
@@ -64,7 +66,7 @@ const Navbar = () => {
 
   const changeLanguage = (lang: string) => {
     setSidebarOpen(false);
-    setLanguage(lang);
+    dispatch(setLanguage(lang));
     i18next.changeLanguage(lang);
     setShowDropdown(false);
   };
@@ -82,7 +84,7 @@ const Navbar = () => {
   ];
 
   return (
-    <div className=" bg-bgGrayText50 top-0 w-full z-[1000]">
+    <div className=" bg-bgGrayText50 sticky top-0 w-full z-[1000]">
       <div className="border-b-[1px] border-bgGrayText400">
         <div className="container mx-auto px-4 py-2 sm:px-6 lg:px-8 flex gap-3 items-center">
           <div className="flex items-center justify-between w-full">

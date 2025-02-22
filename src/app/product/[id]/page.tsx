@@ -2,13 +2,17 @@
 import { fetchSingleProduct, fetchProducts } from "@/lib/productApi";
 import ProductClient from "./ProductClient";
 
-export default async function Page({ params }: { params: { id: string } }) {
+type Params = {
+  id: string;
+};
+
+
+export default async function Page({ params }: { params: Params }) {
   // const productId = parseInt(params.id);
+  const productId = Number(params.id);
   if (!params || !params.id) {
     return <p>Invalid Product</p>; 
   }
-
-  const productId = Number(params.id);
 
   if (isNaN(productId)) {
     return <p>Invalid Product ID</p>;

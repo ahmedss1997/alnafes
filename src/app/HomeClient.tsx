@@ -11,6 +11,9 @@ import { useFavouriteFilter } from "@/hooks/useFavourite";
 import { useDispatch, useSelector } from "react-redux";
 import { setFavData } from "@/store/slices/favouriteSlice";
 import Link from "next/link";
+import Header from "@/components/Header";
+import About from "@/components/Home/About";
+import BestBaked from "@/components/Home/BestBacked";
 
 export default function HomeClient({categoriesList, productsList}: {categoriesList: ICategory[], productsList: IProductItem[]}) {
   const dispatch = useDispatch();
@@ -68,7 +71,7 @@ export default function HomeClient({categoriesList, productsList}: {categoriesLi
 
   return (
     <div className="">
-      {/* <Header />
+      <Header />
       <About />
       {
         categoriesList.length > 3 && (
@@ -76,7 +79,7 @@ export default function HomeClient({categoriesList, productsList}: {categoriesLi
         )
       }
       
-      <BestBaked /> */}
+      <BestBaked />
       <div className="product-home container-fluid mx-auto px-4 py-5 sm:px-6 lg:px-8 flex items-center">
         <div className="row-all w-full flex flex-wrap">
           <div className="relative w-full flex items-center justify-between mb-5 px-3">
