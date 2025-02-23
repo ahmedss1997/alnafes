@@ -5,8 +5,8 @@ import ProductSkeleton from "./productSkeleton";
 import { BsFillInfoCircleFill } from "react-icons/bs";
 import ProductPreview from "./productPreview";
 import ProductTabs from "./productTabs";
-import ProductCardCol from "@/components/Home/productCardCol";
-import { IProductItem } from "@/types/types";
+import ProductCardCol from "../../../components/Home/productCardCol";
+import { IProductItem } from "../../../types/types";
 
 export default function ProductClient({ initialProduct, initialProductsList }: { initialProduct: IProductItem | null; initialProductsList: IProductItem[] }) {
   const [product, setProduct] = useState<IProductItem | null>(initialProduct);

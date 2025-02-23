@@ -1,6 +1,6 @@
 "use client"
 
-import { selectCartTotal, selectCartTotalDiscount, selectCartTotalWithDiscount } from "@/store/slices/cartSlice";
+import { selectCartTotal, selectCartTotalDiscount, selectCartTotalWithDiscount } from "../../store/slices/cartSlice";
 import Link from "next/link"
 import { useSelector } from "react-redux";
 

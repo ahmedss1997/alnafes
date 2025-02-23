@@ -1,7 +1,7 @@
 "use client";
 
-import Footer from "@/components/footer";
-import Navbar from "@/components/navbar";
+import Footer from "../components/footer";
+import Navbar from "../components/navbar";
 import { Provider } from 'react-redux';
 import store from '../store';
 import QueryProvider from '../components/QueryProvider';

@@ -1,9 +1,9 @@
 "use client"
 
 import Image from "next/image";
-import { IAPIResult, ICategory } from "@/types/types";
+import { IAPIResult, ICategory } from "../../types/types";
 import { useEffect, useState } from "react";
-import {useSubCategoryFilter} from "@/hooks/useCategory";
+import {useSubCategoryFilter} from "../../hooks/useCategory";
 import customImage from "../../../public/assets/Cake.png";
 
 const HomeCategory = ({category}: {category: ICategory}) => {

@@ -3,8 +3,8 @@
 import { useState } from "react";
 import authPhoto from "../../../public/assets/authPhoto.png"
 import { useGenerateCode, useVerifyCode, useForgetPassword } from '../../hooks/useAuthentication';
-import { IAPIResult, ICurrentUser } from "@/types/types";
-import OTPComponent from "@/components/OTPComponent ";
+import { IAPIResult, ICurrentUser } from "../../types/types";
+import OTPComponent from "../../components/OTPComponent ";
 import { useRouter } from 'next/navigation'
 import { PiEye, PiEyeClosed } from "react-icons/pi";
 

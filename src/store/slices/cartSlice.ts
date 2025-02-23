@@ -1,4 +1,4 @@
-import { IProduct } from '@/types/types';
+import { IProduct } from '../../types/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface CartState {

@@ -9,11 +9,11 @@ import NotifySign from "../notifyModel/notify_sign";
 import NotifySuccess from "../notifyModel/notify_success";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
-import { IAPIResult, IProductItem } from "@/types/types";
+import { IAPIResult, IProductItem } from "../../types/types";
 import { FaStar } from "react-icons/fa";
-import { RootState } from "@/store";
-import { useToggleFavourite } from "@/hooks/useFavourite";
-import { setFavData } from "@/store/slices/favouriteSlice";
+import { RootState } from "../../store";
+import { useToggleFavourite } from "../../hooks/useFavourite";
+import { setFavData } from "../../store/slices/favouriteSlice";
 
 
 const ProductCardCol = ({

@@ -1,11 +1,11 @@
 
 "use client";
 
-import { IRecipe } from "@/types/types";
+import { IRecipe } from "../../types/types";
 import { useEffect, useState } from "react";
 import customImage from "../../../public/assets/Cake.png";
-import { useRecipeFilter } from "@/hooks/useRecipe";
-import Pagination from "@/components/pagination";
+import { useRecipeFilter } from "../../hooks/useRecipe";
+import Pagination from "../../components/pagination";
 import Link from "next/link";
 
 
