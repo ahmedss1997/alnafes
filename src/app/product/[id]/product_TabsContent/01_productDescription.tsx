@@ -1,6 +1,6 @@
 "use client";
 
-import { IProductItem } from "../../../../types/types";
+import { IProductItem } from "@/types/types";
 
 export default function ProductDescription({ product }: { product: IProductItem }) {
   return (

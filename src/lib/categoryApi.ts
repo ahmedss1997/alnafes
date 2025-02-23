@@ -1,5 +1,5 @@
-import { get } from "../api/serverSide";
-import { ICategory, ICategoryFilterRequest } from "../types/types";
+import { get } from "@/api/serverSide";
+import { ICategory, ICategoryFilterRequest } from "@/types/types";
 
 export const fetchCategoriesFilter = async (params: ICategoryFilterRequest) => {
   try {

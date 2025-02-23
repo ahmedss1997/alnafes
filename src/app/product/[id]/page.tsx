@@ -1,23 +1,16 @@
 
-import { fetchSingleProduct, fetchProducts } from "../../../lib/productApi";
+import { fetchSingleProduct, fetchProducts } from "@/lib/productApi";
 import ProductClient from "./ProductClient";
-import { Metadata } from 'next';
 
-interface PageProps {
-  params: Promise<{ id: string }>;
-}
-
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  return {
-    title: `Product ${(await params).id}`,
-  };
-}
+type Params = {
+  id: string;
+};
 
 
-export default async function Page({ params }: PageProps) {
+export default async function Page({ params }: { params: Params }) {
   // const productId = parseInt(params.id);
-  const productId = Number((await params).id);
-  if (!params || !(await params).id) {
+  const productId = Number(params.id);
+  if (!params || !params.id) {
     return <p>Invalid Product</p>; 
   }
 

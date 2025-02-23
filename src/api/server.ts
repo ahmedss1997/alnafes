@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { getLocalStorage } from '../utility/localStorage';
 
 const baseURL = 'https://nafees.lasercoz.com';
 
@@ -13,12 +12,12 @@ const instance = axios.create({
 // Function to get token from state or context
 const getToken = () => {
   // Implement your logic to retrieve the token (e.g., from localStorage or context)
-  return getLocalStorage('accessToken') || '';
+  return localStorage.getItem('accessToken') || '';
 };
 
 // Utility for POST
 export const post = async (url: string, data: any, withToken = false, contentType = 'application/json') => {
-  const culture = getLocalStorage('culture') || 'en-US';
+  const culture = localStorage.getItem('culture') || 'en-US';
   const headers = {
     'Content-Type': contentType,
     ...(withToken && { Authorization: `Bearer ${getToken()}` }),
@@ -30,7 +29,7 @@ export const post = async (url: string, data: any, withToken = false, contentTyp
 
 // Utility for GET
 export const get = async (url: string, withToken = false, params = {}) => {
-  const culture = getLocalStorage('culture') || 'en-US';
+  const culture = localStorage.getItem('culture') || 'en-US';
   const headers = {
     ...(withToken && { Authorization: `Bearer ${getToken()}` }),
   };
@@ -41,7 +40,7 @@ export const get = async (url: string, withToken = false, params = {}) => {
 
 // Utility for PUT
 export const put = async (url: string, data: any, withToken = false, contentType = 'application/json') => {
-  const culture = getLocalStorage('culture') || 'en-US';
+  const culture = localStorage.getItem('culture') || 'en-US';
   const headers = {
     'Content-Type': contentType,
     ...(withToken && { Authorization: `Bearer ${getToken()}` }),
@@ -53,7 +52,7 @@ export const put = async (url: string, data: any, withToken = false, contentType
 
 // Utility for DELETE
 export const del = async (url: string, withToken = false) => {
-  const culture = getLocalStorage('culture') || 'en-US';
+  const culture = localStorage.getItem('culture') || 'en-US';
   const headers = {
     ...(withToken && { Authorization: `Bearer ${getToken()}` }),
   };

@@ -1,16 +1,16 @@
 "use client";
 import { useState, useEffect } from "react";
-import ProductCard from "../../components/productCard";
+import ProductCard from "@/components/productCard";
 import {BiSolidTrash } from "react-icons/bi";
 import Link from "next/link";
 import cartEmptyImg from "../../../public/assets/cartEmpty.png";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { RootState } from "@/store";
 import { selectCartTotal, selectCartTotalDiscount, selectCartTotalWithDiscount, setCartData } from "../../store/slices/cartSlice";
-import { IAPIResult, IFavourite } from "../../types/types";
-import { useFavouriteFilter, useToggleFavourite } from "../../hooks/useFavourite";
-import { setFavData } from "../../store/slices/favouriteSlice";
+import { IAPIResult, IFavourite } from "@/types/types";
+import { useFavouriteFilter, useToggleFavourite } from "@/hooks/useFavourite";
+import { setFavData } from "@/store/slices/favouriteSlice";
 
 export default function Cart() {
   const dispatch = useDispatch();

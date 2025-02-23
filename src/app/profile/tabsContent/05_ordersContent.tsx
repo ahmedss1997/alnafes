@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react";
 // import Image from "next/image";
 import noOrders from "../../../../public/assets/noOrders.png";
-import { useOrders } from "../../../hooks/useOrders";
-import { IOrder } from "../../../types/types";
+import { useOrders } from "@/hooks/useOrders";
+import { IOrder } from "@/types/types";
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store';
 

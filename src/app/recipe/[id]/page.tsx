@@ -1,9 +1,9 @@
 "use client";
 
-import { useSingleRecipe } from "../../../hooks/useRecipe";
+import { useSingleRecipe } from "@/hooks/useRecipe";
 import { useEffect, useState } from "react";
 import { useParams } from 'next/navigation';
-import { IRecipe } from "../../../types/types";
+import { IRecipe } from "@/types/types";
 // import customImage from "../../../public/assets/Cake.png";
 
 const RecipeDetails = () => {

@@ -1,6 +1,6 @@
 
-import { get } from '../api/server';
-import { ICategoryFilterRequest, ISubCategoryFilterRequest } from '../types/types';
+import { get } from '@/api/server';
+import { ICategoryFilterRequest, ISubCategoryFilterRequest } from '@/types/types';
 import { useMutation } from '@tanstack/react-query';
 
 export const useCategoryFilter = () =>

@@ -20,8 +20,7 @@ import { RootState } from '../store';
 import { setAuthData } from '../store/slices/authSlice';
 import { useDispatch } from 'react-redux';
 import dynamic from "next/dynamic";
-import { setLanguage } from "../store/slices/languageSlice";
-import { getLocalStorage } from "../utility/localStorage";
+import { setLanguage } from "@/store/slices/languageSlice";
 
 const CartMenu = dynamic(() => import("./cartMenu/cartMenu"), { ssr: false });
 
@@ -50,7 +49,7 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    const user = getLocalStorage('currentUser');
+    const user = localStorage.getItem('currentUser');
     if (user) {
       dispatch(setAuthData(JSON.parse(user)));
     }

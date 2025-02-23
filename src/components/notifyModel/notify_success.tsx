@@ -2,7 +2,7 @@ import { CgClose } from "react-icons/cg";
 import { Dispatch, SetStateAction } from "react";
 import { CiCircleCheck } from "react-icons/ci";
 import Link from "next/link";
-import { IProductItem } from "../../types/types";
+import { IProductItem } from "@/types/types";
 export default function NotifySuccess ({product,setOpenNotifySuccess}: {product: IProductItem, setOpenNotifySuccess: Dispatch<SetStateAction<boolean>>}) {
   return (
     <div className="fixed z-10 top-0 left-0 right-0 bottom-0 bg-overlay">

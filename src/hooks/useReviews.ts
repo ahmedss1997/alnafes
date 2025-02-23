@@ -1,6 +1,6 @@
 
-import { get, post } from '../api/server';
-import { iReviewFilterRequest, IReviewRequest } from '../types/types';
+import { get, post } from '@/api/server';
+import { iReviewFilterRequest, IReviewRequest } from '@/types/types';
 import { useMutation } from '@tanstack/react-query';
 
 

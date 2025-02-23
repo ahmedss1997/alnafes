@@ -1,8 +1,8 @@
 
 
 import { useMutation } from '@tanstack/react-query';
-import { get, post } from '../api/server';
-import { ILoginRequest, IRegisterRequest } from '../types/types';
+import { get, post } from '@/api/server';
+import { ILoginRequest, IRegisterRequest } from '@/types/types';
 
 export const useLogin = () =>
   useMutation({

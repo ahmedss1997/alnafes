@@ -8,8 +8,7 @@ import Link from "next/link";
 import { useRouter } from 'next/navigation'
 import { useDispatch } from 'react-redux';
 import { setAuthData } from '../../store/slices/authSlice';
-import { IAPIResult, ICurrentUser } from "../../types/types";
-import { setLocalStorage } from "@/src/utility/localStorage";
+import { IAPIResult, ICurrentUser } from "@/types/types";
 
 
 const SignInPage = () => {
@@ -25,8 +24,8 @@ const SignInPage = () => {
       onSuccess: async (data: IAPIResult<ICurrentUser>) => {
         if (data.code === 200) {
           dispatch(setAuthData(data.result));
-          setLocalStorage('accessToken', data.result.token);
-          setLocalStorage('currentUser', JSON.stringify(data.result));
+          localStorage.setItem('accessToken', data.result.token);
+          localStorage.setItem('currentUser', JSON.stringify(data.result));
           console.log('Login successful!', data);
           router.push('/');
         }

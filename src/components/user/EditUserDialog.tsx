@@ -1,10 +1,10 @@
 "use client";
 import { useState } from "react";
-import { IAPIResult, ICurrentUser, IUserUpdateRequest } from '../../types/types';
+import { IAPIResult, ICurrentUser, IUserUpdateRequest } from '@/types/types';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store';
-import { setAuthData } from '../../store/slices/authSlice';
-import { useUserUpdate } from "../../hooks/useProfile";
+import { RootState } from '@/store';
+import { setAuthData } from '@/store/slices/authSlice';
+import { useUserUpdate } from "@/hooks/useProfile";
 import avatar from "../../../public/assets/avatart.png";
 
 const EditUserDialog = ({ onClose }: { onClose: () => void }) => {

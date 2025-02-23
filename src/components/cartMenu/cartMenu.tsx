@@ -1,9 +1,9 @@
 "use client";
 import Link from "next/link";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { RootState } from "@/store";
 import dynamic from "next/dynamic";
-import { selectCartTotalWithDiscount } from "../../store/slices/cartSlice";
+import { selectCartTotalWithDiscount } from "@/store/slices/cartSlice";
 
 const CartMenuItem = dynamic(() => import("./cartMenuItem"), { ssr: false });
 

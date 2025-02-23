@@ -2,8 +2,8 @@
 "use client";
 
 import Recipe1 from "../../../public/assets/Recipe1.png";
-import { useRecipeFilter } from "../../hooks/useRecipe";
-import { IRecipe } from "../../types/types";
+import { useRecipeFilter } from "@/hooks/useRecipe";
+import { IRecipe } from "@/types/types";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 

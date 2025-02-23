@@ -1,5 +1,5 @@
-import { get, post } from '../api/server';
-import { iFavouriteFilterRequest } from '../types/types';
+import { get, post } from '@/api/server';
+import { iFavouriteFilterRequest } from '@/types/types';
 import { useMutation } from '@tanstack/react-query';
 
 export const useFavouriteFilter = () =>

@@ -1,12 +1,12 @@
 "use client";
 
-import { useFavouriteFilter, useToggleFavourite } from "../../../hooks/useFavourite";
+import { useFavouriteFilter, useToggleFavourite } from "@/hooks/useFavourite";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import ProductCard from "../../../components/productCard";
+import ProductCard from "@/components/productCard";
 import { BiSolidTrash } from "react-icons/bi";
-import { IAPIResult, IFavourite, IProductItem } from "../../../types/types";
-import { setFavData } from "../../../store/slices/favouriteSlice";
+import { IAPIResult, IFavourite, IProductItem } from "@/types/types";
+import { setFavData } from "@/store/slices/favouriteSlice";
 
 export default function WishListContent() {
   const [productsList, setProductsList] = useState<IProductItem[]>([]);

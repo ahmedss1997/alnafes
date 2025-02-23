@@ -6,7 +6,6 @@ import { useRegister } from '../../hooks/useAuthentication';
 import { PiEye, PiEyeClosed } from "react-icons/pi";
 import Link from "next/link";
 import { useRouter } from 'next/navigation'
-import { setLocalStorage } from "@/src/utility/localStorage";
 
 const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -23,7 +22,7 @@ const SignUpPage = () => {
     registerMutation.mutate(formattedRegisterData, {
       onSuccess: (data) => {
         console.log('Register successful!', data);
-        setLocalStorage('accessToken', data.token);
+        localStorage.setItem('accessToken', data.token);
         router.push('/verfication_account');
       },
       onError: (error: any) => {

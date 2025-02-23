@@ -1,6 +1,6 @@
 
-import { get } from '../api/server';
-import { IRecipeFilterRequest } from '../types/types';
+import { get } from '@/api/server';
+import { IRecipeFilterRequest } from '@/types/types';
 import { useMutation } from '@tanstack/react-query';
 
 export const useRecipeFilter = () =>

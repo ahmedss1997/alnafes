@@ -1,7 +1,7 @@
 "use client";
 
 
-import { IProductItem } from "../../../types/types";
+import { IProductItem } from "@/types/types";
 import * as tabContent from "./product_TabsContent";
 import { JSX, useEffect, useState } from "react";
 

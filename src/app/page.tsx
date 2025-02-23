@@ -1,6 +1,6 @@
-import { fetchCategoriesFilter } from "../lib/categoryApi";
+import { fetchCategoriesFilter } from "@/lib/categoryApi";
 import HomeClient from "./HomeClient";
-import { fetchProducts } from "../lib/productApi";
+import { fetchProducts } from "@/lib/productApi";
 
 export default async function Home() {
   const [categoriesList] = await Promise.all([

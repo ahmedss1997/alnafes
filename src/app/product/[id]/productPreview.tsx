@@ -7,14 +7,14 @@ import { MdOutlineMinimize } from "react-icons/md";
 import { GoPlus } from "react-icons/go";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
-import { IProductItem } from "../../../types/types";
+import { IProductItem } from "@/types/types";
 import { FaStar } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../store";
-import { addProductInCart, setCartData } from "../../../store/slices/cartSlice";
-import { IAPIResult, IFavourite } from "../../../types/types";
-import { useFavouriteFilter, useToggleFavourite } from "../../../hooks/useFavourite";
-import { setFavData } from "../../../store/slices/favouriteSlice";
+import { RootState } from "@/store";
+import { addProductInCart, setCartData } from "@/store/slices/cartSlice";
+import { IAPIResult, IFavourite } from "@/types/types";
+import { useFavouriteFilter, useToggleFavourite } from "@/hooks/useFavourite";
+import { setFavData } from "@/store/slices/favouriteSlice";
 
 export default function ProductPreview({ product }: { product: IProductItem }) {
   // const { G_productsInCart, setG_ProductsInCart } = useContext(GlobalContext);

@@ -3,8 +3,8 @@
 import { useState } from "react";
 import authPhoto from "../../../public/assets/authPhoto.png"
 import { useGenerateCode } from '../../hooks/useAuthentication';
-import { IAPIResult, ICurrentUser } from "../../types/types";
-import { isValidEmail } from "../../code/validation";
+import { IAPIResult, ICurrentUser } from "@/types/types";
+import { isValidEmail } from "@/code/validation";
 import { useRouter } from 'next/navigation'
 
 

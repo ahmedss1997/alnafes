@@ -1,4 +1,4 @@
-import { IFavourite } from '../../types/types';
+import { IFavourite } from '@/types/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface FavouriteState {

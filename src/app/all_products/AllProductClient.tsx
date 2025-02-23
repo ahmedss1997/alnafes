@@ -1,13 +1,13 @@
 "use client";
-import ProductCardCol from "../../components/Home/productCardCol";
-import Pagination from "../../components/pagination";
-import ProductCard from "../../components/productCard";
+import ProductCardCol from "@/components/Home/productCardCol";
+import Pagination from "@/components/pagination";
+import ProductCard from "@/components/productCard";
 import { useEffect, useState } from "react";
 import { BsInfoCircle } from "react-icons/bs";
 import { HiOutlineSquares2X2 } from "react-icons/hi2";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { LuSquareEqual } from "react-icons/lu";
-import { IProductItem } from "../../types/types";
+import { IProductItem } from "@/types/types";
 
 const itemCtegoryProducts = [
   {

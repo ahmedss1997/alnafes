@@ -3,9 +3,9 @@ import avatar from "../../../../public/assets/avatart.png";
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store';
 import { useState } from "react";
-import EditUserDialog from "../../../components/user/EditUserDialog";
-import { IAddress } from "../../../types/types";
-import AddressDialog from "../../../components/user/AddressDialog";
+import EditUserDialog from "@/components/user/EditUserDialog";
+import { IAddress } from "@/types/types";
+import AddressDialog from "@/components/user/AddressDialog";
 import { CiMenuKebab } from "react-icons/ci";
 import { FaPen, FaTrashAlt } from "react-icons/fa";
 
