@@ -1,11 +1,11 @@
 "use client";
 import { useDispatch, useSelector } from "react-redux";
-import { addProductInCart, setCartData } from '@/store/slices/cartSlice';
+import { addProductInCart, setCartData } from '../store/slices/cartSlice';
 import {ReactNode, useEffect, useState } from "react";
 import { MdOutlineMinimize } from "react-icons/md";
 import { GoPlus } from "react-icons/go";
-import { IProductItem } from "@/types/types";
-import { RootState } from "@/store";
+import { IProductItem } from "../types/types";
+import { RootState } from "../store";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 const ProductCard = ({
   product,

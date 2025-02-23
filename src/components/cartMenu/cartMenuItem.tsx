@@ -4,8 +4,8 @@ import { setCartData } from "../../store/slices/cartSlice";
 import { GoPlus } from "react-icons/go";
 import { MdOutlineMinimize } from "react-icons/md";
 import { TbTrash } from "react-icons/tb";
-import { IProduct } from "@/types/types";
-import { RootState } from "@/store";
+import { IProduct } from "../../types/types";
+import { RootState } from "../../store";
 
 export default function CartMenuItem({ product }: { product: IProduct }) {
   const dispatch = useDispatch();

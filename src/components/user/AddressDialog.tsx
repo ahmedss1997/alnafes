@@ -1,5 +1,5 @@
 "use client";
-import { IAddress } from "@/types/types";
+import { IAddress } from "../../types/types";
 import { useState } from "react";
 import { FaBriefcase, FaEllipsisH, FaHome } from "react-icons/fa";
 

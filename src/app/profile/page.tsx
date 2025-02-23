@@ -1,6 +1,6 @@
 "use client";
 import * as tabContent from "./tabsContent/";
-import DynamicBiIcons from "@/components/dynamic_bi_Icons";
+import DynamicBiIcons from "../../components/dynamic_bi_Icons";
 import Link from "next/link";
 import { JSX, useEffect, useState } from "react";
 

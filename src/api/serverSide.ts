@@ -19,12 +19,25 @@ const getServerAuth = async () => {
   };
 };
 
+// Client-side token/culture retrieval
+const getClientAuth = () => {
+  if (typeof window !== 'undefined') {
+    return {
+      token: document.cookie.match(/accessToken=([^;]+)/)?.[1] || '',
+      culture: document.cookie.match(/culture=([^;]+)/)?.[1] || 'en-US',
+    };
+  }
+  return { token: '', culture: 'en-US' };
+};
+
 // Universal GET (works in both server and client components)
 export const get = async (url: string, withToken = false, params = {}) => {
   let culture, token;
   if (typeof window !== 'undefined') {
-    culture = document.cookie.match(/culture=([^;]+)/)?.[1] || 'en-US';
-    token = document.cookie.match(/accessToken=([^;]+)/)?.[1] || '';
+    // Client-side
+    const clientAuth = getClientAuth();
+    culture = clientAuth.culture;
+    token = clientAuth.token;
   } else {
     const resultAuth = await getServerAuth();
     culture = resultAuth.culture || 'en-US';
@@ -52,8 +65,10 @@ export const post = async (
 ) => {
   let culture, token;
   if (typeof window !== 'undefined') {
-    culture = document.cookie.match(/culture=([^;]+)/)?.[1] || 'en-US';
-    token = document.cookie.match(/accessToken=([^;]+)/)?.[1] || '';
+    // Client-side
+    const clientAuth = getClientAuth();
+    culture = clientAuth.culture;
+    token = clientAuth.token;
   } else {
     const resultAuth = await getServerAuth();
     culture = resultAuth.culture || 'en-US';
@@ -73,8 +88,10 @@ export const post = async (
 export const put = async (url: string, data: any, withToken = false, contentType = 'application/json') => {
   let culture, token;
   if (typeof window !== 'undefined') {
-    culture = document.cookie.match(/culture=([^;]+)/)?.[1] || 'en-US';
-    token = document.cookie.match(/accessToken=([^;]+)/)?.[1] || '';
+    // Client-side
+    const clientAuth = getClientAuth();
+    culture = clientAuth.culture;
+    token = clientAuth.token;
   } else {
     const resultAuth = await getServerAuth();
     culture = resultAuth.culture || 'en-US';
@@ -94,8 +111,10 @@ export const put = async (url: string, data: any, withToken = false, contentType
 export const del = async (url: string, withToken = false) => {
   let culture, token;
   if (typeof window !== 'undefined') {
-    culture = document.cookie.match(/culture=([^;]+)/)?.[1] || 'en-US';
-    token = document.cookie.match(/accessToken=([^;]+)/)?.[1] || '';
+    // Client-side
+    const clientAuth = getClientAuth();
+    culture = clientAuth.culture;
+    token = clientAuth.token;
   } else {
     const resultAuth = await getServerAuth();
     culture = resultAuth.culture || 'en-US';

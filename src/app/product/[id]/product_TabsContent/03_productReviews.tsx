@@ -1,11 +1,11 @@
 "use client";
 
-import { IProduct, IReviews } from "@/types/types";
+import { IProduct, IReviews } from "../../../../types/types";
 // import Image from "next/image";
 import avatar from "../../../../../public/assets/avatart.png";
 import { FaStar } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import { useAddReview, useReviewsFilter } from "@/hooks/useReviews";
+import { useAddReview, useReviewsFilter } from "../../../../hooks/useReviews";
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../store';
 
@@ -58,6 +58,8 @@ export default function ProductPreview({ product }: { product: IProduct }) {
     // setReviews([newReviewData, ...reviews]);
 
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
     addReview.mutate(newReviewData, {
       onSuccess: (data) => {
         console.log('Add Review successful!', data);

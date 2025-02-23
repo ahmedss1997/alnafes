@@ -1,5 +1,5 @@
-import { get } from "@/api/serverSide";
-import { iProductFilterRequest, IProductItem } from "@/types/types";
+import { get } from "../api/serverSide";
+import { iProductFilterRequest, IProductItem } from "../types/types";
 
 export const fetchProductsFilter = async (params: iProductFilterRequest): Promise<IProductItem[]> => {
   try {

@@ -1,19 +1,19 @@
 "use client"
 
-import AskUs from "@/components/Home/AskUs";
-import ContactUs from "@/components/Home/ContactUs";
-import Recipes from "@/components/Home/Recipe";
+import AskUs from "../components/Home/AskUs";
+import ContactUs from "../components/Home/ContactUs";
+import Recipes from "../components/Home/Recipe";
 import ProductCardCol from "../components/Home/productCardCol";
 import { useEffect, useState } from "react";
-import { IAPIResult, ICategory, IFavourite, IProductItem } from "@/types/types";
-import HomeCategory from "@/components/Home/HomeCategory";
-import { useFavouriteFilter } from "@/hooks/useFavourite";
+import { IAPIResult, ICategory, IFavourite, IProductItem } from "../types/types";
+import HomeCategory from "../components/Home/HomeCategory";
+import { useFavouriteFilter } from "../hooks/useFavourite";
 import { useDispatch, useSelector } from "react-redux";
-import { setFavData } from "@/store/slices/favouriteSlice";
+import { setFavData } from "../store/slices/favouriteSlice";
 import Link from "next/link";
-import Header from "@/components/Header";
-import About from "@/components/Home/About";
-import BestBaked from "@/components/Home/BestBacked";
+import Header from "../components/Header";
+import About from "../components/Home/About";
+import BestBaked from "../components/Home/BestBacked";
 
 export default function HomeClient({categoriesList, productsList}: {categoriesList: ICategory[], productsList: IProductItem[]}) {
   const dispatch = useDispatch();

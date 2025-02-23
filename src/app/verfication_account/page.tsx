@@ -5,6 +5,7 @@ import authPhoto from "../../../public/assets/authPhoto.png"
 import { useVerfication } from '../../hooks/useAuthentication';
 import Link from "next/link";
 import { useRouter } from 'next/navigation'
+import { setLocalStorage } from "@/src/utility/localStorage";
 
 const VerficationAccount = () => {
   const [credentialsVerfication, setCredentialsVerfication] = useState({  Email: '', Code: '' });
@@ -16,7 +17,7 @@ const VerficationAccount = () => {
     VerficationMutation.mutate({ email: credentialsVerfication.Email, code: credentialsVerfication.Code }, {
       onSuccess: (data) => {
         console.log('Verfication successful!', data);
-        localStorage.setItem('accessToken', data.token);
+        setLocalStorage('accessToken', data.token);
         router.push('/sign_in');
       },
       onError: (error) => {
