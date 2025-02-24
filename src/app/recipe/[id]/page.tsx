@@ -12,8 +12,9 @@ const RecipeDetails = () => {
   const [recipe, setRecipesDetails] = useState<IRecipe | null>(null);
 
   useEffect(() => {
+    const recipeId = Number(id);
     RecipeDetails.mutate(
-      { Id: id || 0 },
+      { Id: recipeId || 0 },
       {
         onSuccess: (data) => {
           setRecipesDetails(data.result);

@@ -9,7 +9,7 @@ import NotifySign from "../notifyModel/notify_sign";
 import NotifySuccess from "../notifyModel/notify_success";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { BsHeart, BsHeartFill } from "react-icons/bs";
-import { IAPIResult, IProductItem } from "@/types/types";
+import { IAPIResult, IFavourite, IProductItem } from "@/types/types";
 import { FaStar } from "react-icons/fa";
 import { RootState } from "@/store";
 import { useToggleFavourite } from "@/hooks/useFavourite";
@@ -52,7 +52,7 @@ const ProductCardCol = ({
             console.log('Favourite successful!', data);
             const updatedFavData = isFav
             ? favData.filter((fav) => fav.item.id !== id) // Remove from favorites
-            : [...favData, { item: product, userId: currentUser.id, isFavorite: true }]; // Add to favorites
+            : [...favData, { item: product, userId: currentUser.id, isFavorite: true } as IFavourite]; // Add to favorites
             dispatch(setFavData(updatedFavData));
           }
         },

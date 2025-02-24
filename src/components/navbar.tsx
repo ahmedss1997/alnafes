@@ -49,7 +49,7 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    const user = localStorage.getItem('currentUser');
+    const user = localStorage?.getItem('currentUser');
     if (user) {
       dispatch(setAuthData(JSON.parse(user)));
     }

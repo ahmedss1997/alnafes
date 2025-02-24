@@ -43,7 +43,7 @@ export default function ProductPreview({ product }: { product: IProduct }) {
     if (!newReview.trim()) return;
 
     const newReviewData = {
-      id: product.id,
+      id: product.id || 0,
       userId: currentUser?.id || 0,
       user: {
         firstName: currentUser?.firstName || "John",

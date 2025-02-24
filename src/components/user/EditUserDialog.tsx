@@ -21,13 +21,16 @@ const EditUserDialog = ({ onClose }: { onClose: () => void }) => {
     updateUser.mutate(request, {
       onSuccess: async (data: IAPIResult<ICurrentUser>) => {
         if (data.code === 200) {
+          const img = currentUser?.image || null;
+          const img1 = image ? URL.createObjectURL(image) : null;
+          const user = currentUser || {} as ICurrentUser;
           dispatch(setAuthData({
-            ...currentUser,
+            ...user,
             firstName,
             lastName,
             email,
             phoneNumber,
-            image: image ? URL.createObjectURL(image) : currentUser?.image,
+            image: img1 || img,
           }));
           onClose();
           console.log('update successful!', data);
@@ -47,6 +50,7 @@ const EditUserDialog = ({ onClose }: { onClose: () => void }) => {
       Email: email,
       PhoneNumber: phoneNumber,
       Id: currentUser?.id,
+      Image: null
     };
     handleUpdateUser(request);
   };

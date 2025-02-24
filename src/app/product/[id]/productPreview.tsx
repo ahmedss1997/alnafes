@@ -73,7 +73,7 @@ export default function ProductPreview({ product }: { product: IProductItem }) {
             console.log('Favourite successful!', data);
             const updatedFavData = isFav
             ? favData.filter((fav) => fav.item.id !== id) // Remove from favorites
-            : [...favData, { item: product, userId: currentUser.id, isFavorite: true }]; // Add to favorites
+            : [...favData, { item: product, userId: currentUser.id, isFavorite: true } as IFavourite]; // Add to favorites
             dispatch(setFavData(updatedFavData));
           }
         },

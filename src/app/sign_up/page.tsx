@@ -22,7 +22,7 @@ const SignUpPage = () => {
     registerMutation.mutate(formattedRegisterData, {
       onSuccess: (data) => {
         console.log('Register successful!', data);
-        localStorage.setItem('accessToken', data.token);
+        localStorage?.setItem('accessToken', data.token);
         router.push('/verfication_account');
       },
       onError: (error: any) => {

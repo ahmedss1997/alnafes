@@ -7,23 +7,19 @@ type Params = {
 };
 
 
-export default async function Page({ params }: { params: Params }) {
-  // const productId = parseInt(params.id);
-  const productId = Number(params.id);
-  if (!params || !params.id) {
-    return <p>Invalid Product</p>; 
+export default async function Page({ params }: { params: Promise<Params> }) {
+  try {
+    const productId = await params;
+
+    const [productData, relatedProductsData] = await Promise.all([
+      fetchSingleProduct(parseInt(productId.id)),
+      fetchProducts(), // Example params for related products
+    ]);
+
+    return (
+      <ProductClient initialProduct={productData} initialProductsList={relatedProductsData.slice(0, 20)} />
+    );
+  } catch (error) {
+    console.error("Error fetching product:", error);
   }
-
-  if (isNaN(productId)) {
-    return <p>Invalid Product ID</p>;
-  }
-
-  const [productData, relatedProductsData] = await Promise.all([
-    fetchSingleProduct(productId),
-    fetchProducts(), // Example params for related products
-  ]);
-
-  return (
-    <ProductClient initialProduct={productData} initialProductsList={relatedProductsData.slice(0, 20)} />
-  );
 }

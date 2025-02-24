@@ -16,7 +16,7 @@ const VerficationAccount = () => {
     VerficationMutation.mutate({ email: credentialsVerfication.Email, code: credentialsVerfication.Code }, {
       onSuccess: (data) => {
         console.log('Verfication successful!', data);
-        localStorage.setItem('accessToken', data.token);
+        localStorage?.setItem('accessToken', data.token);
         router.push('/sign_in');
       },
       onError: (error) => {

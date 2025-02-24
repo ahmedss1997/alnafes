@@ -13,9 +13,9 @@ export interface ICurrentUser {
   firstName: string
   lastName: string
   email: string
-  image: string
-  phoneNumber: string
-  isVerified: boolean
+  image: string | null
+  phoneNumber: string | number
+  isVerified: boolean | null
   role: number
   address: string
   token: string
@@ -195,7 +195,7 @@ export interface User {
   firstName: string
   lastName: string
   email: string
-  image: string
+  image?: string
   phoneNumber: string
   isVerified: boolean
   role: number
@@ -342,8 +342,9 @@ export interface IFavourite {
 export interface IUserUpdateRequest {
   FirstName?: string,
   LastName?: string,
-  Image?: string,
-  PhoneNumber?: number,
+  Image: string | null,
+  Email?: string,
+  PhoneNumber?: number | string,
   Id?: number,
 }
 
